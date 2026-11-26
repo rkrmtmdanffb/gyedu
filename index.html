@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>광양교육사랑 홈페이지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<style>
+/* 레이아웃: 넓은 화면은 상단 메뉴, 휴대폰은 하단 탭이 있는 앱 모양. 한 번에 한 화면만 보여 준다. */
+:root{
+  --green:#0E7A35; --deep:#0B4F26; --tint:#EEF6E6; --leaf:#D5E9BF;
+  --gold:#E9CF8B; --gold-tint:#F6EBCF; --gold-ink:#5A410A;
+  --ink:#1C2B20; --sub:#4C5B50; --line:#E4ECDD; --bg:#FFFFFF; --soft:#F6FAF1;
+  --font:'Noto Sans KR',system-ui,-apple-system,'Malgun Gothic',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-text-size-adjust:100%}
+img,video{max-width:100%}
+a{color:var(--green);text-decoration:none}
+a:hover{color:var(--deep)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{margin:0;letter-spacing:-0.02em;text-wrap:balance;line-height:1.3}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.topbar{background:var(--deep);color:#E2EFD3;font-size:14px}
+.topbar .wrap{padding-top:9px;padding-bottom:9px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:16px;padding-bottom:16px}
+.logo img{height:50px;width:auto;display:block}
+nav.main{display:flex;flex-wrap:wrap;gap:6px}
+nav.main{justify-content:flex-end}
+nav.main a{padding:9px 11px;border-radius:999px;color:var(--ink);font-size:16px;font-weight:700}
+nav.main a[aria-current="page"]{background:var(--tint);color:var(--green)}
+.view{display:none}
+.view.on{display:block}
+.btn{display:inline-block;padding:15px 28px;border-radius:999px;background:var(--green);color:#fff;font-size:17px;font-weight:700;border:0;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--deep);color:#fff}
+.btn.light{background:#fff;color:var(--deep)}
+.btn.tint{background:var(--tint);color:var(--deep)}
+.btn.gold{background:var(--gold);color:var(--ink)}
+.hero{position:relative;overflow:hidden;border-radius:40px;background:var(--tint);margin:0 24px}
+.hero-in{max-width:1200px;margin:0 auto;padding:64px 48px;display:flex;flex-wrap:wrap;align-items:center;gap:48px}
+.hero-in>div{flex:1 1 420px;min-width:0}
+.hero h1{font-size:clamp(34px,5vw,58px);font-weight:800;letter-spacing:-0.03em;line-height:1.24}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero p{font-size:19px;color:var(--sub);max-width:500px;margin:22px 0 26px}
+.hero .pic{height:400px;border-radius:36px 36px 36px 120px;background:#CFE3BC;box-shadow:0 24px 48px rgba(11,79,38,.18);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.hero .pic img{height:94%;width:auto;display:block}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+.pill{display:inline-block;padding:5px 13px;border-radius:999px;font-size:13px;font-weight:700;background:var(--tint);color:var(--deep)}
+.pill.gold{background:var(--gold-tint);color:var(--gold-ink)}
+.pill.solid{background:var(--green);color:#fff}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:#fff;border-radius:24px;box-shadow:0 8px 28px rgba(28,43,32,.08);padding:28px;color:var(--ink);display:flex;flex-direction:column;gap:10px}
+a.card:hover{color:var(--ink);box-shadow:0 12px 32px rgba(28,43,32,.14)}
+.card .ic{width:58px;height:58px;border-radius:20px;background:var(--tint);display:flex;align-items:center;justify-content:center}
+.card .ic.g{background:var(--gold-tint)}
+.card strong{font-size:20px}
+.card span.d{font-size:15px;color:var(--sub)}
+section.block{padding:56px 0}
+.eyebrow{font-size:15px;font-weight:700;color:var(--green)}
+h2.t{font-size:32px;font-weight:800;margin:4px 0 26px}
+.band{background:var(--soft)}
+.cols{display:flex;flex-wrap:wrap;gap:36px}
+.cols>.main-col{flex:999 1 520px;min-width:0}
+.cols>.side{flex:1 1 300px;min-width:0}
+.panel{background:#fff;border-radius:28px;padding:32px}
+.list a,.list div.item{display:flex;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);color:var(--ink)}
+.list .ti{flex:1;min-width:0;font-size:18px;font-weight:500}
+.list .dt{flex:none;font-size:14px;color:var(--sub);font-variant-numeric:tabular-nums}
+.dark{background:var(--deep);color:#fff;border-radius:28px;padding:32px;display:flex;flex-direction:column;gap:16px}
+.dark .sm{font-size:14px;color:var(--leaf)}
+.pagehead{border-radius:40px;background:var(--tint);margin:0 24px;padding:48px}
+.pagehead>div{max-width:1104px;margin:0 auto}
+.pagehead h1{font-size:clamp(30px,4vw,44px);font-weight:800}
+.pagehead p{font-size:18px;color:var(--sub);margin-top:8px}
+.ph{color:#8A5A00;background:#FFF6DC;border-radius:6px;padding:0 4px}
+.pres{display:flex;flex-wrap:wrap;align-items:center;gap:36px;background:var(--deep);color:#fff;border-radius:32px;padding:36px}
+.pres img{width:200px;height:240px;object-fit:cover;border-radius:24px;border:4px solid var(--gold)}
+.pres .who{flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.pres .who strong{font-size:34px}
+.pres dl{flex:1 1 280px;min-width:0;margin:0;background:#17663A;border-radius:24px;padding:22px 26px;display:grid;grid-template-columns:auto 1fr;gap:12px 20px;font-size:16px}
+.pres dt{color:var(--leaf)}
+.pres dd{margin:0;font-weight:700;text-align:right}
+.past{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.past article{background:#fff;border-radius:22px;box-shadow:0 8px 28px rgba(28,43,32,.08);padding:22px;display:flex;flex-direction:column;gap:6px}
+.past strong{font-size:22px}
+.past small{font-size:14px;color:var(--sub)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{height:44px;padding:0 20px;border-radius:999px;border:1px solid #B9CDB0;background:#fff;color:var(--ink);font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.file{display:flex;align-items:center;gap:14px;padding:16px 20px;background:#fff;border-radius:20px;box-shadow:0 4px 16px rgba(28,43,32,.07)}
+.file .meta{flex:1;min-width:0}
+.file .meta b{display:block;font-size:17px;font-weight:500}
+.file .meta small{font-size:13px;color:var(--sub)}
+.file .act,.ftpl .act{flex:none;padding:10px 18px;border-radius:999px;background:var(--gold-tint);color:var(--gold-ink);font-size:14px;font-weight:700;border:0;cursor:pointer;font-family:inherit}
+.file .none{flex:none;font-size:13px;color:var(--sub)}
+.files{display:flex;flex-direction:column;gap:12px}
+.player{margin-top:18px;border-radius:24px;background:var(--ink);padding:16px;display:none}
+.player.on{display:block}
+.player video,.player audio{width:100%;display:block;border-radius:14px}
+.cal{background:#fff;border-radius:28px;box-shadow:0 8px 28px rgba(28,43,32,.08);padding:22px}
+.cal-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-h button{width:44px;height:44px;border:0;background:var(--tint);border-radius:50%;font-size:20px;cursor:pointer;color:var(--deep)}
+.cal-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center}
+.cal-g span.w{font-size:13px;font-weight:700;color:var(--sub);padding:6px 0}
+.cal-g button{height:46px;border:0;background:none;border-radius:14px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink);position:relative}
+.cal-g button.ev::after{content:"";position:absolute;left:50%;bottom:6px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--green)}
+.cal-g button.sel{background:var(--green);color:#fff}
+.cal-g button.sel.ev::after{background:var(--gold)}
+.steps div{display:flex;gap:18px;padding:11px 0;border-bottom:1px solid var(--line)}
+.steps b{flex:none;width:56px;color:var(--green);font-variant-numeric:tabular-nums}
+footer{background:var(--deep);color:var(--leaf);font-size:14px;margin-top:40px}
+footer .wrap{padding-top:36px;padding-bottom:36px}
+footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
+.fstep{display:flex;align-items:center;gap:12px;margin:0 0 16px}
+.fstep b{flex:none;width:36px;height:36px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px}
+.fstep h2{font-size:24px;font-weight:800}
+.fdrop{border:2px dashed #9DBF8F;border-radius:24px;background:var(--soft);padding:28px;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.fdrop.over{background:var(--tint);border-color:var(--green)}
+.fdrop p{flex:1 1 260px;color:var(--sub);font-size:16px}
+.fdrop input[type=file]{position:absolute;width:1px;height:1px;opacity:0}
+.fdrop input[type=file]:focus-visible+label{outline:3px solid var(--gold);outline-offset:2px}
+.fmsg{min-height:24px;margin:14px 0 0;font-size:15px;font-weight:700;color:var(--green)}
+.fmsg.bad{color:#A32D12}
+.fempty{color:var(--sub);font-size:15px;padding:8px 0}
+.ftpl{background:#fff;border-radius:22px;box-shadow:0 6px 22px rgba(28,43,32,.08);padding:20px 22px;margin-top:14px}
+.ftpl-h{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:10px}
+.ftpl-h strong{font-size:18px;word-break:break-all}
+.fmaps{overflow-x:auto}
+.fmap{display:grid;grid-template-columns:44px 130px 130px 84px 190px minmax(160px,1fr) 52px;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line);min-width:820px}
+.fmap.fhead{border-top:0;font-size:13px;font-weight:700;color:var(--sub);padding-bottom:4px}
+.fmap small{font-size:13px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fmap input[type=checkbox]{width:22px;height:22px;accent-color:var(--green)}
+.fmap select,.fmap input[type=text],.ffield input,.ffield textarea,.fadd input{height:44px;border:1px solid #B9CDB0;border-radius:12px;padding:0 12px;font:inherit;font-size:15px;background:#fff;color:var(--ink);min-width:0;width:100%}
+.ffield textarea{height:auto;padding:12px;resize:vertical}
+.flink{border:0;background:none;color:var(--green);font:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:6px 4px;text-decoration:underline}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px 20px}
+.ffield{display:flex;flex-direction:column;gap:6px}
+.ffield.wide{grid-column:1/-1}
+.ffield label{font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fadd{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;max-width:460px}
+.fadd input{flex:1 1 200px;width:auto}
+.flog{margin:6px 0 0;padding-left:20px;font-size:14px;color:var(--sub)}
+.bn-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.bn{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;aspect-ratio:3/1;border-radius:18px;overflow:hidden;text-align:center;color:var(--sub)}
+.bn.empty{border:2px dashed #9DBF8F;background:var(--soft);font-size:15px;font-weight:700}
+.bn.empty small{font-size:13px;font-weight:400}
+.bn img{width:100%;height:100%;object-fit:cover;display:block}
+.bn.wide{aspect-ratio:6/1;min-height:96px}
+.bn .tag{position:absolute;left:10px;top:10px;padding:2px 8px;border-radius:6px;background:rgba(28,43,32,.72);color:#fff;font-size:12px;font-weight:700}
+.adstrip{padding:8px 0 0}
+.lock{max-width:460px;background:#fff;border-radius:24px;box-shadow:0 8px 28px rgba(28,43,32,.08);padding:28px;display:flex;flex-direction:column;gap:14px}
+.lock .btn{align-self:flex-start}
+.lock .btn[disabled]{opacity:.6}
+.lock-hint{font-size:14px;color:var(--sub);margin-top:4px}
+.tblwrap{overflow-x:auto;background:#fff;border-radius:20px;box-shadow:0 8px 28px rgba(28,43,32,.08);margin-top:14px}
+.tbl{width:100%;border-collapse:collapse;font-size:16px;min-width:480px}
+.tbl th{background:var(--deep);color:#fff;text-align:left;padding:14px 18px;font-size:15px;white-space:nowrap}
+.tbl td{padding:14px 18px;border-top:1px solid var(--line)}
+.tabbar{display:none}
+@media (max-width:760px){
+  nav.main,.topbar{display:none}
+  header{position:sticky;top:0;background:#fff;z-index:5;border-bottom:1px solid var(--line)}
+  header .wrap{padding:12px 16px}
+  .logo img{height:36px}
+  .wrap{padding:0 16px}
+  .hero,.pagehead{margin:12px 16px 0;border-radius:24px}
+  .hero-in{padding:28px 22px;gap:24px}
+  .pagehead{padding:28px 22px}
+  .hero .pic{height:240px;border-radius:24px}
+  section.block{padding:32px 0}
+  h2.t{font-size:24px;margin-bottom:18px}
+  .panel,.dark,.pres{padding:22px;border-radius:22px}
+  .pres img{width:120px;height:146px}
+  .pres .who strong{font-size:26px}
+  .list .ti{font-size:16px}
+  .file{flex-wrap:wrap}
+  body{padding-bottom:76px}
+  footer{margin-top:16px}
+  .tabbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:6px 6px 10px;z-index:6}
+  .tabbar a{height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:500;color:#5B6A5F}
+  .tabbar a[aria-current="page"]{color:var(--green);font-weight:700}
+}
+@media (prefers-reduced-motion:no-preference){.card,.btn{transition:box-shadow .15s,background .15s}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap" style="display:flex;justify-content:space-between;gap:12px"><span>광양의 배움을 함께 가꾸는 사람들</span><a href="#join" style="color:#fff;font-weight:700">회원가입</a></div></div>
+<header><div class="wrap">
+  <a class="logo" href="#home"><img src="img/logo.png" alt="광양교육사랑"></a>
+  <nav class="main" aria-label="주 메뉴">
+    <a href="#about">소개</a><a href="#presidents">역대 회장단</a><a href="#news">소식</a><a href="#programs">주요 사업</a><a href="#schedule">행사 일정</a><a href="#library">자료실</a><a href="#forms">행사 서류</a><a href="#members">회원 명부</a><a href="#join">참여·후원</a>
+  </nav>
+</div></header>
+
+<main>
+<!-- 홈 -->
+<div class="view" id="v-home">
+  <div class="hero"><div class="hero-in">
+    <div>
+      <span class="pill gold">책에서 새싹이 자라듯</span>
+      <h1 style="margin-top:16px">아이들의 내일을<br><em>함께 키우는</em> 광양</h1>
+      <p>광양교육사랑은 광양의 학부모와 시민이 함께 아이들의 배움과 성장을 응원하는 모임입니다.</p>
+      <div class="row"><a class="btn" href="#join">함께 참여하기</a><a class="btn light" href="#programs">주요 사업 보기</a></div>
+    </div>
+    <div><div class="pic"><img src="img/kids.png" alt="물웅덩이에서 뛰노는 어린이들"></div></div>
+  </div></div>
+
+  <section class="block"><div class="wrap"><div class="grid">
+    <a class="card" href="#news"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0E7A35" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1zM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg></span><strong>소식</strong><span class="d">모임 소식과 행사 이야기를 전합니다.</span></a>
+    <a class="card" href="#schedule"><span class="ic g"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6B4E0C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><strong>행사 일정</strong><span class="d">모임과 행사를 달력으로 봅니다.</span></a>
+    <a class="card" href="#library"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0E7A35" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h5l2 2h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5z"/></svg></span><strong>자료실</strong><span class="d">행사 자료와 영상, 서식을 모았습니다.</span></a>
+    <a class="card" href="#presidents"><span class="ic g"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6B4E0C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></span><strong>역대 회장단</strong><span class="d">모임을 이끌어 오신 분들입니다.</span></a>
+  </div>
+  <div class="row" style="margin-top:20px"><a class="btn tint" href="#about">소개</a><a class="btn tint" href="#programs">주요 사업</a><a class="btn tint" href="#members">회원 명부</a><a class="btn tint" href="#forms">행사 서류</a><a class="btn tint" href="#join">참여·후원</a></div>
+  </div></section>
+
+  <section class="block band"><div class="wrap cols">
+    <div class="main-col panel">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="font-size:26px;font-weight:800">최신 소식</h2><a href="#news" style="font-weight:700">전체 보기</a></div>
+      <div class="list"><a href="#news-ceremony"><span class="pill gold">행사</span><span class="ti">제7·8대 회장단 및 감사 이·취임식</span><span class="dt">2024.12.27</span></a></div>
+    </div>
+    <div class="side dark">
+      <h2 style="font-size:22px;font-weight:800">행사 일정</h2>
+      <p class="sm">다가오는 행사는 달력에서 확인하세요.</p>
+      <a class="btn gold" href="#schedule" style="text-align:center;margin-top:auto">달력 보기</a>
+    </div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <div style="position:relative;overflow:hidden;background:var(--tint);border-radius:40px;padding:40px;display:flex;flex-wrap:wrap;align-items:center;gap:32px">
+      <img src="img/bench.jpg" alt="우산을 들고 벤치에 앉은 두 어린이" style="flex:none;width:170px;height:220px;object-fit:cover;border-radius:24px;box-shadow:0 12px 28px rgba(11,79,38,.2)">
+      <div style="flex:1 1 320px;min-width:0"><h2 style="font-size:30px;font-weight:800">작은 관심이 모여 큰 나무가 됩니다</h2><p style="color:var(--sub);font-size:17px;margin-top:10px">회원 가입과 후원으로 광양 아이들의 배움을 함께 응원해 주세요.</p></div>
+      <a class="btn" href="#join">참여 방법 보기</a>
+    </div>
+  </div></section>
+  <section class="block" style="padding-top:0"><div class="wrap">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px"><div><span class="eyebrow">함께하는 곳</span><h2 class="t" style="margin-bottom:8px">회원 업체</h2></div><a href="#join" style="font-weight:700">배너 문의</a></div>
+    <p style="color:var(--sub);margin-bottom:20px">광양교육사랑 회원이 운영하는 업체입니다.</p>
+    <div class="bn-grid" id="bn-members"></div>
+  </div></section>
+</div>
+
+<!-- 소개 -->
+<div class="view" id="v-about">
+  <div class="pagehead"><div><h1>광양교육사랑 소개</h1><p>광양의 교육을 사랑하는 학부모와 시민의 모임입니다.</p></div></div>
+  <section class="block"><div class="wrap cols">
+    <div class="main-col">
+      <h2 class="t">인사말</h2>
+      <p style="font-size:18px;max-width:38em"><span class="ph">[회장 인사말을 여기에 넣어 주세요]</span></p>
+      <h2 class="t" style="margin-top:44px">자문위원</h2>
+      <p style="font-size:18px">임원재 · 김재숙 · 김종현</p>
+    </div>
+    <div class="side" style="display:flex;justify-content:center;align-items:flex-start"><img src="img/emblem.png" alt="광양교육사랑 엠블럼" style="width:220px;height:auto"></div>
+  </div></section>
+</div>
+
+<!-- 역대 회장단 -->
+<div class="view" id="v-presidents">
+  <div class="pagehead"><div><h1>역대 회장단</h1><p>광양교육사랑을 이끌어 오신 분들을 소개합니다.</p></div></div>
+  <section class="block"><div class="wrap">
+    <div class="pres">
+      <img src="img/president.jpg" alt="제8대 회장 사진">
+      <div class="who"><span class="pill gold" style="align-self:flex-start">제8대 회장단 · 2025년</span><strong>회장 정형기</strong><span style="color:var(--leaf)">2024년 12월 27일 취임</span></div>
+      <dl><dt>상임부회장</dt><dd>문정은</dd><dt>부회장</dt><dd>김태우</dd><dt>감사</dt><dd>한재성 · 신은희</dd><dt>사무국장</dt><dd>송수정</dd><dt>재무국장</dt><dd>하태곤</dd></dl>
+    </div>
+    <h2 class="t" style="margin-top:48px">역대 회장</h2>
+    <div class="past">
+      <article><span class="pill gold" style="align-self:flex-start">초대</span><strong>서옥란</strong></article>
+      <article><span class="pill gold" style="align-self:flex-start">제2대</span><strong><span class="ph">[이름]</span></strong></article>
+      <article><span class="pill gold" style="align-self:flex-start">제3대</span><strong><span class="ph">[이름]</span></strong></article>
+      <article><span class="pill gold" style="align-self:flex-start">제4대</span><strong>조재인</strong></article>
+      <article><span class="pill gold" style="align-self:flex-start">제5대</span><strong><span class="ph">[이름]</span></strong></article>
+      <article><span class="pill gold" style="align-self:flex-start">제6대</span><strong>안영숙</strong><small>2023년</small></article>
+      <article><span class="pill gold" style="align-self:flex-start">제7대</span><strong>전선미</strong><small>2024년</small></article>
+      <article><span class="pill gold" style="align-self:flex-start">제8대</span><strong>정형기</strong><small>2025년</small></article>
+    </div>
+  </div></section>
+</div>
+
+<!-- 소식 목록 -->
+<div class="view" id="v-news">
+  <div class="pagehead"><div><h1>소식</h1><p>광양교육사랑의 공지와 행사, 활동 소식입니다.</p></div></div>
+  <section class="block"><div class="wrap"><div class="panel" style="box-shadow:0 8px 28px rgba(28,43,32,.08)"><div class="list">
+    <a href="#news-ceremony"><span class="pill gold">행사</span><span class="ti">제7·8대 회장단 및 감사 이·취임식</span><span class="dt">2024.12.27</span></a>
+  </div></div></div></section>
+</div>
+
+<!-- 소식 상세 -->
+<div class="view" id="v-news-ceremony">
+  <div class="pagehead"><div><a href="#news" style="font-weight:700">‹ 소식 목록</a><h1 style="margin-top:10px">제7·8대 광양교육사랑 회장단 및 감사 이·취임식</h1><p>2024년 12월 27일(금) 오후 5시 30분 · 광양교육지원청 햇살동 시청각실</p></div></div>
+  <section class="block"><div class="wrap cols" style="align-items:flex-start">
+    <div class="side" style="flex:1 1 380px"><img src="img/invite.gif" alt="이·취임식 초대장" style="width:100%;height:auto;border-radius:28px;box-shadow:0 12px 32px rgba(28,43,32,.14);display:block"></div>
+    <div class="main-col" style="display:flex;flex-direction:column;gap:22px">
+      <p style="font-size:18px">제7대 전선미 회장의 뜻깊은 마무리와 제8대 정형기 회장의 새로운 출발을 회원과 내빈이 함께 기념했습니다.</p>
+      <div class="panel" style="box-shadow:0 8px 28px rgba(28,43,32,.08)">
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:8px">진행 순서</h2>
+        <div class="steps">
+          <div><b>17:20</b><span>식전 행사</span></div><div><b>17:30</b><span>국민의례</span></div><div><b>17:35</b><span>내빈 소개</span></div><div><b>17:40</b><span>2024 광양교육사랑 성과 영상</span></div><div><b>17:50</b><span>시상 (표창장 · 감사장 · 회원공로상)</span></div><div><b>18:05</b><span>이임사 · 제7대 전선미 회장</span></div><div><b>18:10</b><span>광양교육사랑 정기 전달</span></div><div><b>18:13</b><span>취임사 · 제8대 정형기 회장</span></div><div><b>18:18</b><span>격려사 · 축사</span></div><div><b>18:28</b><span>신임 임원 소개</span></div><div><b>18:38</b><span>신입회원 회원증서 및 배지 수여</span></div><div><b>18:45</b><span>폐식 및 기념 촬영</span></div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+  <section class="block" style="padding-top:0"><div class="wrap">
+    <h2 class="t">행사 영상</h2>
+    <video src="files/title.mp4" poster="img/poster.jpg" controls preload="none" style="width:100%;aspect-ratio:16/9;border-radius:28px;background:var(--ink);display:block"></video>
+    <div class="row" style="margin-top:24px"><a class="btn" href="files/leaflet.pdf" target="_blank" rel="noopener">리플릿 열기 (PDF)</a><a class="btn tint" href="#presidents">제8대 회장단 보기</a></div>
+  </div></section>
+</div>
+
+<!-- 주요 사업 -->
+<div class="view" id="v-programs">
+  <div class="pagehead"><div><h1>주요 사업</h1><p>광양교육사랑이 해 온 일들입니다.</p></div></div>
+  <section class="block"><div class="wrap"><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+    <div class="card"><span class="pill solid" style="align-self:flex-start">13회 운영</span><strong>재활용 나눔장터 ‘광양보물섬’</strong><span class="d">환경의 날을 기념해 여는 나눔장터입니다.</span></div>
+    <div class="card"><span class="pill solid" style="align-self:flex-start">9회 운영</span><strong>청소년 재능기부 페스티벌</strong><span class="d">청소년이 재능을 나누는 무대입니다.</span></div>
+    <div class="card"><span class="pill solid" style="align-self:flex-start">제7~12회 주관</span><strong>환경 동요 부르기 대회</strong><span class="d">아이들이 노래로 환경을 생각합니다.</span></div>
+    <div class="card"><strong>4주 4색 자원봉사</strong><span class="d">화단 꾸미기 등 자원봉사 프로그램을 운영합니다.</span></div>
+    <div class="card"><strong>초·중·고 학부모 간담회</strong><span class="d">광양시 학부모와 교육 현안을 나눕니다.</span></div>
+    <div class="card"><strong>유관기관 합동 캠페인</strong><span class="d">학교·아동 폭력 예방, 등굣길 캠페인을 함께합니다.</span></div>
+    <div class="card"><strong>건전한 졸업문화 캠페인</strong><span class="d">건전한 졸업문화 정착을 위해 활동합니다.</span></div>
+    <div class="card"><strong>소외계층 청소년 체험활동 지원</strong><span class="d">청소년의 체험활동을 돕습니다.</span></div>
+    <div class="card"><strong>지역아동센터 물품 지원</strong><span class="d">지역아동센터에 필요한 물품을 전합니다.</span></div>
+  </div></div></section>
+</div>
+
+<!-- 행사 일정 -->
+<div class="view" id="v-schedule">
+  <div class="pagehead"><div><h1>행사 일정</h1><p>날짜를 누르면 그날 일정을 볼 수 있습니다.</p></div></div>
+  <section class="block"><div class="wrap cols">
+    <div class="side" style="flex:1 1 360px"><div class="cal">
+      <div class="cal-h"><button type="button" id="cal-prev" aria-label="이전 달">‹</button><strong id="cal-title" style="font-size:19px"></strong><button type="button" id="cal-next" aria-label="다음 달">›</button></div>
+      <div class="cal-g" id="cal-grid"></div>
+    </div></div>
+    <div class="main-col">
+      <h2 class="t" id="day-title" style="font-size:24px"></h2>
+      <div id="day-list" class="files"></div>
+      <h2 class="t" style="font-size:24px;margin-top:40px">지난 행사</h2>
+      <div class="files"><a class="file" href="#news-ceremony" style="color:var(--ink)"><span class="pill gold">행사</span><span class="meta"><b>제7·8대 회장단 및 감사 이·취임식</b><small>2024.12.27 (금) 17:30 · 광양교육지원청 햇살동 시청각실</small></span></a></div>
+    </div>
+  </div></section>
+</div>
+
+<!-- 자료실 -->
+<div class="view" id="v-library">
+  <div class="pagehead"><div><h1>자료실</h1><p>행사 자료, 영상·음원, 사진, 서식을 모았습니다.</p></div></div>
+  <section class="block"><div class="wrap">
+    <div class="chips" id="lib-chips"></div>
+    <div class="files" id="lib-list"></div>
+    <div class="player" id="lib-player" aria-live="polite"></div>
+    <h2 class="t" style="margin-top:48px">임원 전용 자료</h2>
+    <div id="s-officer"></div>
+  </div></section>
+</div>
+
+<!-- 행사 서류 자동 채우기 -->
+<div class="view" id="v-forms">
+  <div class="pagehead"><div><span class="pill gold">임원용</span><h1 style="margin-top:10px">행사 서류 자동 채우기</h1><p>엑셀 양식을 올려 두고 행사 정보를 한 번만 입력하면, 양식마다 알맞은 칸에 자동으로 채워 줍니다.</p></div></div>
+  <section class="block"><div class="wrap">
+    <div class="fstep"><b>1</b><h2>엑셀 양식 올리기</h2></div>
+    <div class="fdrop" id="f-drop">
+      <p>청소년 페스티벌 계획서처럼 행사 때마다 쓰는 엑셀 양식(.xlsx)을 올려 주세요. 여러 개를 한꺼번에 올려도 됩니다. 올린 양식은 이 컴퓨터의 브라우저에만 저장됩니다.</p>
+      <input type="file" id="f-file" accept=".xlsx" multiple>
+      <label class="btn" for="f-file">엑셀 양식 선택</label>
+    </div>
+    <p class="fmsg" id="f-msg" role="status"></p>
+    <div id="f-templates"></div>
+  </div></section>
+  <section class="block band"><div class="wrap">
+    <div class="fstep"><b>2</b><h2>행사 정보 한 번에 입력</h2></div>
+    <div class="panel">
+      <div class="fgrid" id="f-values"></div>
+      <form class="fadd" id="f-addfield"><label for="f-newfield" style="position:absolute;width:1px;height:1px;overflow:hidden">추가할 항목 이름</label><input type="text" id="f-newfield" placeholder="항목 추가 (예: 참가 인원)"><button class="chip" type="submit">항목 추가</button></form>
+      <div style="margin-top:24px"><button class="btn" type="button" id="f-run">엑셀 자동 채우기</button></div>
+    </div>
+  </div></section>
+  <section class="block"><div class="wrap">
+    <div class="fstep"><b>3</b><h2>완성된 파일 내려받기</h2></div>
+    <div id="f-results"><p class="fempty">"엑셀 자동 채우기"를 누르면 완성된 파일이 여기에 나옵니다.</p></div>
+  </div></section>
+</div>
+
+<!-- 회원 명부 -->
+<div class="view" id="v-members">
+  <div class="pagehead"><div><span class="pill gold">회원 전용</span><h1 style="margin-top:10px">회원 명부</h1><p>광양교육사랑 회원만 볼 수 있습니다.</p></div></div>
+  <section class="block"><div class="wrap">
+    <div id="s-members"></div>
+    <p style="margin-top:36px"><a href="#manage" style="font-weight:700">명부·임원 자료 관리 (임원용) →</a></p>
+  </div></section>
+</div>
+
+<!-- 명부·임원 자료 관리 -->
+<div class="view" id="v-manage">
+  <div class="pagehead"><div><span class="pill gold">임원용</span><h1 style="margin-top:10px">명부·임원 자료 관리</h1><p>회원 명부와 임원 전용 자료를 비밀번호로 잠근 묶음으로 만듭니다. 파일은 이 컴퓨터 안에서만 처리합니다.</p></div></div>
+  <section class="block"><div class="wrap">
+    <form class="panel" id="s-build" style="box-shadow:0 8px 28px rgba(28,43,32,.08);display:flex;flex-direction:column;gap:20px;max-width:760px">
+      <div class="ffield"><label for="s-roster">1. 회원 명부 엑셀 (.xlsx)</label><input type="file" id="s-roster" accept=".xlsx" style="padding:9px 12px"><span class="lock-hint">첫 줄은 "이름, 직책, 업체, 연락처" 같은 제목으로 두세요. 생년월일과 집 주소는 빼는 것이 안전합니다.</span></div>
+      <div class="ffield"><label for="s-files">2. 임원 전용 자료 (여러 개 선택 가능)</label><input type="file" id="s-files" multiple style="padding:9px 12px"><span class="lock-hint">시나리오, 감사장 원본, 회의록처럼 임원만 볼 파일을 고릅니다. 한글(HWP) 파일도 됩니다.</span></div>
+      <div class="fgrid">
+        <div class="ffield"><label for="s-newm">3. 회원 비밀번호 (8자 이상)</label><input type="text" id="s-newm" autocomplete="off"></div>
+        <div class="ffield"><label for="s-newo">4. 임원 비밀번호 (8자 이상)</label><input type="text" id="s-newo" autocomplete="off"></div>
+      </div>
+      <div><button class="btn" type="submit">보안 묶음 만들기</button></div>
+      <p class="fmsg" id="s-bmsg" role="status"></p>
+      <div id="s-bout"></div>
+    </form>
+    <div class="row" style="margin-top:28px;align-items:center"><a class="btn tint" id="apply-btn" href="#manage" target="_blank" rel="noopener">가입 신청 명단 보기 (구글 시트)</a><span id="apply-note" style="color:var(--sub);font-size:15px"></span></div>
+    <div style="max-width:760px;margin-top:28px;color:var(--sub);font-size:15px">
+      <p><b style="color:var(--ink)">올리는 방법</b> · 내려받은 secure.zip의 압축을 풀면 secure 폴더가 나옵니다. 이 폴더를 홈페이지 파일(index.html)이 있는 곳에 그대로 올리면, 전에 있던 명부와 자료는 새것으로 바뀝니다.</p>
+      <p style="margin-top:8px"><b style="color:var(--ink)">비밀번호를 바꾸려면</b> · 같은 파일로 새 비밀번호를 넣어 묶음을 다시 만들어 올리면 됩니다. 회원이 탈퇴하면 바꿔 주세요.</p>
+    </div>
+  </div></section>
+</div>
+
+<!-- 참여·후원 -->
+<div class="view" id="v-join">
+  <div class="pagehead"><div><h1>회원가입 · 참여 · 후원</h1><p>광양교육사랑과 함께하는 방법입니다.</p></div></div>
+  <section class="block"><div class="wrap">
+    <h2 class="t">회원가입</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+      <div class="card"><span class="pill solid" style="align-self:flex-start">회비 납부 회원</span><strong>정회원</strong><span class="d">회비를 내고 모임 활동과 행사에 함께하는 회원입니다. 회원 명부를 볼 수 있는 회원 비밀번호를 알려 드립니다.</span><span class="d">회비: <span class="ph">[회비 금액 · 납부 방법]</span></span></div>
+      <div class="card"><span class="pill gold" style="align-self:flex-start">회비 없음</span><strong>홈페이지 회원</strong><span class="d">회비 없이 가입해 광양교육사랑의 소식과 행사 안내를 받는 회원입니다.</span></div>
+    </div>
+    <div class="row" style="margin-top:24px;align-items:center">
+      <a class="btn" id="join-btn" href="#join" target="_blank" rel="noopener">회원가입 신청하기</a>
+      <span id="join-note" style="color:var(--sub);font-size:15px"></span>
+    </div>
+    <p style="color:var(--sub);font-size:15px;margin-top:12px">신청서에서 회원 구분을 고르고 제출하면 사무국에서 확인한 뒤 연락드립니다. 문의: <span class="ph">[사무국 전화번호]</span></p>
+  </div></section>
+  <section class="block band"><div class="wrap"><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card"><strong>배너 올리기</strong><span class="d">회원 업체 배너와 외부 광고 배너를 홈페이지에 올릴 수 있습니다. 배너 그림(가로 600×세로 200)과 연결할 주소를 사무국으로 보내 주세요.</span></div>
+    <div class="card"><strong>후원</strong><span class="d"><span class="ph">[후원금이 쓰이는 곳 안내]</span></span><span class="d">후원 계좌: <span class="ph">[은행 · 계좌번호 · 예금주]</span></span></div>
+  </div></div></section>
+</div>
+</main>
+
+<div class="adstrip"><div class="wrap"><div id="bn-ad"></div></div></div>
+
+<footer><div class="wrap"><strong>광양교육사랑</strong><span class="ph">[주소]</span> · 전화 <span class="ph">[전화번호]</span> · 이메일 <span class="ph">[이메일]</span></div></footer>
+
+<nav class="tabbar" aria-label="하단 메뉴">
+  <a href="#home"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9z"/></svg>홈</a>
+  <a href="#news"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>소식</a>
+  <a href="#schedule"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>일정</a>
+  <a href="#library"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h5l2 2h5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5z"/></svg>자료실</a>
+  <a href="#presidents"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>회장단</a>
+</nav>
+
+<script src="jszip.min.js"></script>
+<script src="forms.js"></script>
+<script src="secure.js"></script>
+<script>
+(function(){
+  var VIEWS=['home','about','presidents','news','news-ceremony','programs','schedule','library','forms','members','manage','join'];
+  function show(){
+    var h=(location.hash||'#home').slice(1); if(VIEWS.indexOf(h)<0) h='home';
+    VIEWS.forEach(function(v){document.getElementById('v-'+v).classList.toggle('on',v===h);});
+    var top=h==='news-ceremony'?'news':h==='manage'?'members':h;
+    document.querySelectorAll('nav.main a, .tabbar a').forEach(function(a){
+      if(a.getAttribute('href')==='#'+top) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+    });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',show); show();
+
+  /* 회원가입: 구글 설문 주소와, 임원이 보는 신청 명단(구글 시트) 주소를 넣는다. */
+  var JOIN_FORM_URL='';
+  var APPLICANTS_SHEET_URL='';
+  (function(){
+    function wire(btnId,noteId,url,emptyText){
+      var b=document.getElementById(btnId), n=document.getElementById(noteId);
+      if(/^https:\/\//.test(url)){b.href=url;}
+      else{b.removeAttribute('href');b.removeAttribute('target');b.setAttribute('aria-disabled','true');b.style.opacity='.55';b.style.cursor='default';n.textContent=emptyText;}
+    }
+    wire('join-btn','join-note',JOIN_FORM_URL,'가입 신청서를 준비하고 있습니다.');
+    wire('apply-btn','apply-note',APPLICANTS_SHEET_URL,'구글 시트 주소가 아직 연결되지 않았습니다.');
+  })();
+
+  /* 배너: img(그림 파일), name(업체 이름), link(누르면 열릴 주소)를 채우면 그 자리에 표시된다. 비워 두면 빈 자리로 보인다. */
+  var MEMBER_BANNERS=[
+    {img:'',name:'',link:''},
+    {img:'',name:'',link:''},
+    {img:'',name:'',link:''},
+    {img:'',name:'',link:''}
+  ];
+  var AD_BANNER={img:'',name:'',link:''};
+  function banner(b,i,wide){
+    var has=b&&b.img, n=document.createElement(has&&b.link?'a':'div');
+    n.className='bn'+(wide?' wide':'')+(has?'':' empty');
+    if(has){
+      if(b.link){n.href=b.link;n.target='_blank';n.rel='noopener';}
+      var im=document.createElement('img'); im.src=b.img; im.alt=b.name||(wide?'광고 배너':'회원 업체 배너'); n.appendChild(im);
+      if(wide){var t=document.createElement('span');t.className='tag';t.textContent='광고';n.appendChild(t);}
+    }else{
+      var a=document.createElement('span'); a.textContent=wide?'외부 광고 배너 자리':'회원 업체 배너 자리 '+(i+1); n.appendChild(a);
+      var s=document.createElement('small'); s.textContent=wide?'권장 크기 1200×200':'권장 크기 600×200'; n.appendChild(s);
+    }
+    return n;
+  }
+  (function(){
+    var m=document.getElementById('bn-members'); MEMBER_BANNERS.forEach(function(b,i){m.appendChild(banner(b,i,false));});
+    document.getElementById('bn-ad').appendChild(banner(AD_BANNER,0,true));
+  })();
+
+  /* 자료실 */
+  var FILES=[
+    {k:'행사자료',t:'제7·8대 회장단 및 감사 이·취임식 리플릿 (식순·임원 명단·주요 사업)',e:'PDF',d:'2024.12.27',link:'files/leaflet.pdf'},
+    {k:'영상·음원',t:'2025 이·취임식 타이틀 영상 (50초)',e:'MP4',d:'2024.12.26',video:'files/title.mp4'},
+    {k:'영상·음원',t:'행사 음원 (1분 53초)',e:'MP3',d:'',audio:'files/music.mp4'},
+    {k:'사진',t:'이·취임식 초대장 (움직이는 이미지)',e:'GIF',d:'2024.12.27',link:'img/invite.gif'},
+    {k:'서식',t:'입회원서(회원 가입 신청서) 양식',e:'HWP',d:''}
+  ];
+  var cur='전체', chips=document.getElementById('lib-chips'), list=document.getElementById('lib-list'), player=document.getElementById('lib-player');
+  function el(tag,cls,txt){var n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n;}
+  function drawLib(){
+    chips.textContent='';
+    ['전체','행사자료','영상·음원','사진','서식'].forEach(function(c){
+      var b=el('button','chip',c); b.type='button'; b.setAttribute('aria-pressed',c===cur?'true':'false');
+      b.addEventListener('click',function(){cur=c; drawLib();}); chips.appendChild(b);
+    });
+    list.textContent='';
+    FILES.filter(function(f){return cur==='전체'||f.k===cur;}).forEach(function(f){
+      var row=el('div','file'); row.appendChild(el('span','pill',f.k));
+      var m=el('span','meta'); m.appendChild(el('b',null,f.t)); m.appendChild(el('small',null,f.e+(f.d?' · '+f.d:''))); row.appendChild(m);
+      if(f.link){var a=el('a','act','열기'); a.href=f.link; a.target='_blank'; a.rel='noopener'; row.appendChild(a);}
+      else if(f.video||f.audio){var b=el('button','act','재생'); b.type='button'; b.addEventListener('click',function(){play(f);}); row.appendChild(b);}
+      else row.appendChild(el('span','none','파일 준비 중'));
+      list.appendChild(row);
+    });
+  }
+  function play(f){
+    player.textContent=''; var m=document.createElement(f.video?'video':'audio');
+    m.src=f.video||f.audio; m.controls=true; m.setAttribute('aria-label',f.t); player.appendChild(m); player.classList.add('on');
+    var p=m.play(); if(p&&p.catch) p.catch(function(){});
+    player.scrollIntoView({block:'nearest'});
+  }
+  drawLib();
+
+  /* 달력 */
+  var EVENTS={'2024-12-27':[{t:'제7·8대 회장단 및 감사 이·취임식',s:'17:30 · 광양교육지원청 햇살동 시청각실',href:'#news-ceremony'}]};
+  var now=new Date(), y=now.getFullYear(), mo=now.getMonth(), sel=now.getDate();
+  var grid=document.getElementById('cal-grid'), title=document.getElementById('cal-title'), dayTitle=document.getElementById('day-title'), dayList=document.getElementById('day-list');
+  function key(d){return y+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');}
+  function drawCal(){
+    title.textContent=y+'년 '+(mo+1)+'월'; grid.textContent='';
+    ['일','월','화','수','목','금','토'].forEach(function(w){grid.appendChild(el('span','w',w));});
+    var first=new Date(y,mo,1).getDay(), days=new Date(y,mo+1,0).getDate();
+    if(sel>days) sel=days;
+    for(var i=0;i<first;i++) grid.appendChild(el('span'));
+    for(var d=1;d<=days;d++){(function(d){
+      var b=el('button',(d===sel?'sel ':'')+(EVENTS[key(d)]?'ev':''),String(d)); b.type='button';
+      b.setAttribute('aria-label',(mo+1)+'월 '+d+'일'+(EVENTS[key(d)]?' 일정 있음':''));
+      b.addEventListener('click',function(){sel=d; drawCal();}); grid.appendChild(b);
+    })(d);}
+    dayTitle.textContent=(mo+1)+'월 '+sel+'일 일정'; dayList.textContent='';
+    var ev=EVENTS[key(sel)]||[];
+    if(!ev.length){var n=el('div','file'); n.appendChild(el('span','meta','이 날은 등록된 일정이 없습니다.')); dayList.appendChild(n);}
+    ev.forEach(function(e){var a=el('a','file'); a.href=e.href; a.style.color='inherit'; a.appendChild(el('span','pill gold','행사')); var m=el('span','meta'); m.appendChild(el('b',null,e.t)); m.appendChild(el('small',null,e.s)); a.appendChild(m); dayList.appendChild(a);});
+  }
+  document.getElementById('cal-prev').addEventListener('click',function(){mo--; if(mo<0){mo=11;y--;} drawCal();});
+  document.getElementById('cal-next').addEventListener('click',function(){mo++; if(mo>11){mo=0;y++;} drawCal();});
+  drawCal();
+})();
+</script>
+</body>
+</html>
