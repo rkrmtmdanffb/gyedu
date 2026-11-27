@@ -252,6 +252,34 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   .tabbar a[aria-current="page"]{color:var(--green);font-weight:700}
 }
 @media (prefers-reduced-motion:no-preference){.card,.btn{transition:box-shadow .15s,background .15s}}
+
+/* 스크롤하면 떠오르는 효과: 화면에 들어올 때 위에서 아래로 내려오며 나타난다. 움직임 줄이기 설정이면 끈다. */
+.js-rv .rv{opacity:0;transform:translateY(-40px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.js-rv .rv.in{opacity:1;transform:none}
+.js-rv .rv.in>.card,.js-rv .rv.in>.bn,.js-rv .rv.in>article,.js-rv .rv.in>a,.js-rv .rv.in>figure{animation:rvUp .8s cubic-bezier(.2,.7,.2,1) both}
+.js-rv .rv.in>:nth-child(2){animation-delay:.1s}.js-rv .rv.in>:nth-child(3){animation-delay:.2s}.js-rv .rv.in>:nth-child(4){animation-delay:.3s}.js-rv .rv.in>:nth-child(5){animation-delay:.4s}.js-rv .rv.in>:nth-child(n+6){animation-delay:.5s}
+@keyframes rvUp{from{opacity:0;transform:translateY(-28px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.js-rv .rv{opacity:1;transform:none;transition:none}.js-rv .rv.in>*{animation:none!important}}
+
+/* 갤러리(옆으로 넘어가는 사진 묶음) */
+.gal{position:relative}
+.gal-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:6px}
+.gal-track::-webkit-scrollbar{display:none}
+.gal-item{flex:0 0 calc((100% - 24px)/3);scroll-snap-align:start;position:relative;display:block;aspect-ratio:4/3;overflow:hidden;border-radius:6px;background:#0d1b2a;color:#fff}
+.gal-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+a.gal-item:hover img{transform:scale(1.05)}
+.gal-item span{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 10px;font-size:15px;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.7));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gal-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:48px;height:64px;border:0;background:rgba(0,0,0,.28);color:#fff;font-size:40px;line-height:1;cursor:pointer;font-family:inherit;padding:0 0 6px}
+.gal-nav:hover{background:rgba(0,0,0,.5)}
+.gal-nav.prev{left:0;border-radius:0 8px 8px 0}.gal-nav.next{right:0;border-radius:8px 0 0 8px}
+.gal-dots{display:flex;justify-content:center;gap:4px;margin-top:10px;flex-wrap:wrap}
+.gal-dots button{width:24px;height:24px;border:0;background:none;padding:0;cursor:pointer;display:grid;place-items:center}
+.gal-dots button::before{content:"";width:10px;height:10px;border-radius:50%;background:#C9CED6}
+.gal-dots button[aria-current=true]::before{background:#6B7280}
+.xmas.bg6 .gal-dots button::before{background:rgba(255,255,255,.35)}
+.xmas.bg6 .gal-dots button[aria-current=true]::before{background:#fff}
+@media (max-width:760px){.gal-item{flex-basis:calc((100% - 12px)/2)}}
+@media (max-width:480px){.gal-item{flex-basis:100%}}
 </style>
 </head>
 <body>
@@ -279,14 +307,15 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   <svg class="xmas-drift" viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46V26C80 6 150 34 240 22S400 2 500 20s170 16 260 4 180-10 250 6 130 8 190-6v22z" fill="#FFFFFF"/></svg>
   </div>
 
-  <section class="block xmas-only" style="padding-bottom:0"><div class="wrap">
-    <span class="eyebrow" style="color:#B3262E">메리 크리스마스</span><h2 class="t" style="margin-bottom:20px">따뜻한 연말 보내세요</h2>
-    <div class="xgal">
-      <img src="img/xmas-g1.jpg" alt="눈 덮인 마을 광장의 크리스마스트리 그림">
-      <img src="img/xmas-g2.jpg" alt="눈 내리는 밤의 크리스마스 시장과 마차">
-      <img src="img/xmas-g3.jpg" alt="벽난로 앞에 놓인 크리스마스 선물 상자">
-      <img src="img/xmas-g4.jpg" alt="눈 내리는 하늘을 나는 산타 썰매">
+  <!-- 갤러리: 소식에 올린 사진이 자동으로 들어온다. 3장씩 보이고 옆으로 넘어간다. -->
+  <section class="block" style="padding-bottom:0"><div class="wrap">
+    <div style="text-align:center;margin-bottom:24px"><h2 class="t" style="margin:0">광양교육사랑 갤러리</h2><p style="margin:8px 0 0;color:var(--sub)">사진으로 보는 광양교육사랑 이야기</p></div>
+    <div class="gal" id="gal" role="region" aria-label="사진 갤러리">
+      <button type="button" class="gal-nav prev" id="gal-prev" aria-label="이전 사진">‹</button>
+      <div class="gal-track" id="gal-track" tabindex="0"></div>
+      <button type="button" class="gal-nav next" id="gal-next" aria-label="다음 사진">›</button>
     </div>
+    <div class="gal-dots" id="gal-dots"></div>
   </div></section>
 
   <section class="block"><div class="wrap"><div class="grid">
@@ -796,8 +825,56 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   byId('cal-prev').addEventListener('click',function(){mo--; if(mo<0){mo=11;y--;} drawCal();});
   byId('cal-next').addEventListener('click',function(){mo++; if(mo>11){mo=0;y++;} drawCal();});
 
-  function drawAll(){drawInfo(); drawPres(); drawNews(); drawBanners(); drawLib(); drawEvents();}
+
+  /* 갤러리: 소식 사진(새것부터) + 크리스마스 그림(꾸밈 기간에만). 4초마다 한 칸씩 넘어간다. */
+  var XMAS_PHOTOS=[['img/xmas-g1.jpg','눈 덮인 마을 광장의 크리스마스트리 그림'],['img/xmas-g2.jpg','눈 내리는 밤의 크리스마스 시장과 마차'],['img/xmas-g3.jpg','벽난로 앞에 놓인 크리스마스 선물 상자'],['img/xmas-g4.jpg','눈 내리는 하늘을 나는 산타 썰매']];
+  var galTimer=null, galPos=0, galHold=false;
+  function galPer(){var w=window.innerWidth; return w<=480?1:w<=760?2:3;}
+  function galGo(i,smooth){
+    var tr=byId('gal-track'), n=tr.children.length, max=Math.max(0,n-galPer());
+    if(i>max) i=0; if(i<0) i=max; galPos=i;
+    var it=tr.children[i]; if(it) tr.scrollTo({left:it.offsetLeft-tr.offsetLeft,behavior:smooth===false?'auto':'smooth'});
+    Array.prototype.forEach.call(byId('gal-dots').children,function(d,k){d.setAttribute('aria-current',k===i?'true':'false');});
+  }
+  function drawGallery(){
+    var tr=byId('gal-track'), dots=byId('gal-dots'); tr.textContent=''; dots.textContent='';
+    var items=sortedNews().filter(function(n){return n.img;}).slice(0,12).map(function(n){return {img:n.img,cap:n.title,href:postHref(n),alt:n.title+' 사진'};});
+    if(document.body.classList.contains('xmas')) XMAS_PHOTOS.forEach(function(x){items.push({img:x[0],cap:'',href:'',alt:x[1]});});
+    items.forEach(function(x){
+      var a=el(x.href?'a':'div','gal-item'); if(x.href) a.href=x.href;
+      var im=el('img'); im.src=x.img; im.alt=x.alt; im.loading='lazy'; a.appendChild(im);
+      if(x.cap) a.appendChild(el('span',null,x.cap)); tr.appendChild(a);
+    });
+    var pages=Math.max(1,items.length-galPer()+1);
+    for(var i=0;i<pages&&pages>1;i++){(function(i){var d=el('button'); d.type='button'; d.setAttribute('aria-label',(i+1)+'번째 사진으로'); d.addEventListener('click',function(){galGo(i);}); dots.appendChild(d);})(i);}
+    byId('gal-prev').hidden=byId('gal-next').hidden=pages<2;
+    galGo(0,false);
+    clearInterval(galTimer);
+    if(pages>1&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))
+      galTimer=setInterval(function(){ if(galHold||document.hidden||byId('v-home').style.display==='none'||!byId('gal').offsetParent) return; galGo(galPos+1); },4000);
+  }
+  (function(){
+    var g=byId('gal'), tr=byId('gal-track'), t;
+    byId('gal-prev').addEventListener('click',function(){galGo(galPos-1);});
+    byId('gal-next').addEventListener('click',function(){galGo(galPos+1);});
+    ['mouseenter','focusin','touchstart'].forEach(function(e){g.addEventListener(e,function(){galHold=true;},{passive:true});});
+    ['mouseleave','focusout','touchend'].forEach(function(e){g.addEventListener(e,function(){galHold=false;},{passive:true});});
+    /* 손으로 밀어 넘긴 뒤에도 점이 맞게 따라오도록 한다. */
+    tr.addEventListener('scroll',function(){clearTimeout(t); t=setTimeout(function(){var best=0,bd=1e9; Array.prototype.forEach.call(tr.children,function(c,k){var d=Math.abs(c.offsetLeft-tr.offsetLeft-tr.scrollLeft); if(d<bd){bd=d;best=k;}});
+      best=Math.min(best,Math.max(0,tr.children.length-galPer())); galPos=best; Array.prototype.forEach.call(byId('gal-dots').children,function(d,k){d.setAttribute('aria-current',k===best?'true':'false');});},120);},{passive:true});
+    window.addEventListener('resize',function(){clearTimeout(t); t=setTimeout(drawGallery,200);});
+  })();
+
+  function drawAll(){drawInfo(); drawPres(); drawNews(); drawBanners(); drawLib(); drawEvents(); drawGallery();}
   drawAll();
+  /* 스크롤 효과: 각 구역의 덩어리가 화면에 들어오면 한 번 떠오른다. */
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    var nodes=document.querySelectorAll('.view section .wrap > *, .view .pagehead > div, .rel-list');
+    Array.prototype.forEach.call(nodes,function(n){ if(n.closest('.rv')) return; n.classList.add('rv'); io.observe(n); });
+    document.documentElement.classList.add('js-rv');
+  })();
   fetch('data/content.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
     if(!d||typeof d!=='object') return;
     ['info','current','banners'].forEach(function(k){if(d[k]&&typeof d[k]==='object'){for(var p in d[k]) C[k][p]=d[k][p];}});
