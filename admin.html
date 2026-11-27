@@ -98,6 +98,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
         <label for="po-title">제목</label><input type="text" id="po-title" required maxlength="80">
         <label for="po-body">내용</label><textarea id="po-body"></textarea>
         <label for="po-img">사진 (한 장, 없어도 됩니다)</label><input type="file" id="po-img" accept="image/*">
+        <label for="po-yt">유튜브 영상 주소 (없어도 됩니다)</label><input type="text" id="po-yt" placeholder="https://youtu.be/…" inputmode="url">
+        <p class="hint">긴 영상은 유튜브에 올린 뒤 그 주소를 여기에 붙여 넣으면, 글 안에서 영상이 나옵니다.</p>
         <p class="hint">큰 사진은 알맞은 크기로 줄여서 올립니다. 아이 얼굴이 나온 사진은 보호자 동의를 받은 것만 올려 주세요.</p>
         <button class="btn" type="submit">올리기</button><p class="msg" role="status"></p>
       </form>
@@ -108,7 +110,9 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
       <form id="f-file">
         <label for="fi-cat">분류</label><select id="fi-cat"><option>행사자료</option><option>사진</option><option>영상·음원</option><option>서식</option></select>
         <label for="fi-title">제목</label><input type="text" id="fi-title" required maxlength="80">
-        <label for="fi-file">파일 (25MB 까지)</label><input type="file" id="fi-file" required>
+        <label for="fi-file">파일 (25MB 까지)</label><input type="file" id="fi-file">
+        <label for="fi-yt">또는 유튜브 영상 주소</label><input type="text" id="fi-yt" placeholder="https://youtu.be/…" inputmode="url">
+        <p class="hint">파일과 유튜브 주소 중 하나만 넣습니다. 긴 영상은 유튜브에 올리고 주소를 넣어 주세요.</p>
         <p class="hint">회원의 주민번호·집 주소·전화번호가 적힌 파일은 올리지 마세요. 자료실은 누구나 볼 수 있습니다.</p>
         <button class="btn" type="submit">올리기</button><p class="msg" role="status"></p>
       </form>
@@ -248,6 +252,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 
   /* ---------- 파일 ---------- */
   function fileB64(file){return file.arrayBuffer().then(b64);}
+  /* 유튜브 주소에서 영상 번호(11자)만 꺼낸다. 주소가 비었으면 '', 잘못됐으면 null. */
+  function ytId(u){u=(u||'').trim(); if(!u) return ''; var m=/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/|\/live\/)([A-Za-z0-9_-]{11})/.exec(u)||/^([A-Za-z0-9_-]{11})$/.exec(u); return m?m[1]:null;}
   function ext(name){var m=/\.([A-Za-z0-9]{1,5})$/.exec(name||''); return m?m[1].toLowerCase():'bin';}
   function newPath(e){var d=new Date(); return 'uploads/'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+'/'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)+'.'+e;}
   /* 사진은 긴 쪽 1600px 로 줄여 JPEG 로 만든다. GIF 는 그대로 둔다. */
@@ -291,8 +297,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
     var n=$('l-news'), f=$('l-files'), e=$('l-events'); n.textContent=''; f.textContent=''; e.textContent='';
     C.news.forEach(function(x){row(n,x.cat||'소식',x.title,x.date,delBtn(x.title,function(){
       return save(function(c){c.news=c.news.filter(function(y){return y.id!==x.id;}); c.events.forEach(function(v){if(v.post===x.id) delete v.post;}); return mine(x.img)?[{path:x.img,del:true}]:[];},'소식 지움: '+x.title);}));});
-    C.files.forEach(function(x){var p=x.link||x.video||x.audio||''; row(f,x.k,x.t,[x.e,x.d].filter(Boolean).join(' · '),delBtn(x.t,function(){
-      return save(function(c){c.files=c.files.filter(function(y){return !(y.t===x.t&&(y.link||y.video||y.audio||'')===p);}); return mine(p)?[{path:p,del:true}]:[];},'자료 지움: '+x.t);}));});
+    C.files.forEach(function(x){var p=x.link||x.video||x.audio||x.yt||''; row(f,x.k,x.t,[x.e,x.d].filter(Boolean).join(' · '),delBtn(x.t,function(){
+      return save(function(c){c.files=c.files.filter(function(y){return !(y.t===x.t&&(y.link||y.video||y.audio||y.yt||'')===p);}); return mine(p)?[{path:p,del:true}]:[];},'자료 지움: '+x.t);}));});
     C.events.forEach(function(x){row(e,'일정',x.title,[x.date,x.info].filter(Boolean).join(' · '),delBtn(x.title,function(){
       return save(function(c){c.events=c.events.filter(function(y){return !(y.date===x.date&&y.title===x.title);});},'일정 지움: '+x.title);}));});
     [n,f,e].forEach(function(b){if(!b.childNodes.length) b.appendChild(el('p','hint','아직 없습니다.'));});
@@ -331,12 +337,17 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
   $('f-post').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
     var file=$('po-img').files[0], id='n'+Date.now().toString(36), title=$('po-title').value.trim();
     if(!title) throw userErr('제목을 써 주세요.');
+    var yt=ytId($('po-yt').value); if(yt===null) throw userErr('유튜브 주소가 맞지 않습니다. 유튜브의 "공유"에서 복사한 주소를 넣어 주세요.');
     var up=file?photo(file,1600).then(function(p){return {path:newPath(p.ext),b64:p.b64};},function(){throw userErr('사진을 읽지 못했습니다. JPG나 PNG 사진으로 해 주세요.');}):Promise.resolve(null);
-    return up.then(function(u){return save(function(c){c.news.push({id:id,cat:$('po-cat').value,title:title,date:$('po-date').value,body:$('po-body').value.trim(),img:u?u.path:''});},'소식 올림: '+title,u?[u]:[]);})
+    return up.then(function(u){return save(function(c){c.news.push({id:id,cat:$('po-cat').value,title:title,date:$('po-date').value,body:$('po-body').value.trim(),img:u?u.path:'',yt:yt});},'소식 올림: '+title,u?[u]:[]);})
       .then(function(){f.reset(); $('po-date').value=today();});
   });});
   $('f-file').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
-    var file=$('fi-file').files[0], title=$('fi-title').value.trim(), e=ext(file.name);
+    var file=$('fi-file').files[0], title=$('fi-title').value.trim(), yt=ytId($('fi-yt').value);
+    if(yt===null) throw userErr('유튜브 주소가 맞지 않습니다. 유튜브의 "공유"에서 복사한 주소를 넣어 주세요.');
+    if(!file&&!yt) throw userErr('파일을 고르거나 유튜브 주소를 넣어 주세요.');
+    if(yt&&!file) return save(function(c){c.files.unshift({k:$('fi-cat').value,t:title,e:'유튜브',d:today().replace(/-/g,'.'),yt:yt});},'자료 올림(유튜브): '+title).then(function(){f.reset();});
+    var e=ext(file.name);
     if(file.size>MAX_FILE) throw userErr('파일이 25MB보다 큽니다. 큰 영상은 유튜브에 올리고 주소를 소식 글에 적어 주세요.');
     if(/^(exe|bat|cmd|js|html?|php|msi|scr|vbs)$/.test(e)) throw userErr('이 종류의 파일은 올릴 수 없습니다.');
     var path=newPath(e), item={k:$('fi-cat').value,t:title,e:e.toUpperCase(),d:today().replace(/-/g,'.')};
