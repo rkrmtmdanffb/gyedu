@@ -163,11 +163,12 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 .tbl td{padding:14px 18px;border-top:1px solid var(--line)}
 .rel{padding:28px 0 0}
 .rel h2{font-size:15px;font-weight:700;color:var(--sub);margin-bottom:12px}
-.rel-list{display:flex;flex-wrap:wrap;gap:12px}
-.rel-list a,.rel-list div{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 22px;border-radius:16px;border:1px solid #B9CDB0;background:#fff;color:var(--ink);font-size:17px;font-weight:700}
-.rel-list a:hover{border-color:var(--green);color:var(--deep)}
-.rel-list img{height:40px;width:auto;display:block;border-radius:6px}
-.rel-list small{font-size:13px;font-weight:400;color:var(--sub)}
+.rel-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 28px;align-items:center}
+.rel-list a,.rel-list div{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;color:var(--ink);font-size:20px;font-weight:800;white-space:nowrap}
+.rel-list a:hover{opacity:.75}
+.rel-list img{max-height:44px;max-width:100%;width:auto;height:auto;display:block;mix-blend-mode:multiply;min-width:0}
+.rel-list a.named img{max-height:36px;flex:none}
+@media (max-width:760px){.rel-list{grid-template-columns:repeat(2,minmax(0,1fr))}.rel-list a,.rel-list div{font-size:17px}}
 /* 크리스마스 꾸밈: body에 xmas가 붙어 있을 때만 적용된다. */
 .xmas{--xred:#B3262E}
 .xmas .topbar{background:var(--xred);color:#fff}
@@ -178,6 +179,29 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 .xmas .xmas-lights{display:block;height:34px;overflow:hidden}
 .xmas-lights svg{display:block;width:100%;height:34px}
 .xmas{background:#F1F6FB}
+/* 배경 후보 (주소 뒤에 ?bg=1~5 를 붙이면 미리 볼 수 있다. BG_CHOICE 로 고정) */
+/* 배경 6: 밤하늘 트리 사진(전체 배경). 바깥 글자는 흰색, 흰 상자 안 글자는 원래 색. */
+.xmas.bg6{background:#07062E;--ink:#FFFFFF;--sub:#D5DBF0;--green:#9FE3B4;--deep:#D8F5E0;--line:rgba(255,255,255,.22)}
+.xmas.bg6::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(5,5,40,.35),rgba(5,5,40,.35)),url(img/bg-tree.jpg) right center/cover no-repeat;pointer-events:none}
+.xmas.bg6 header,.xmas.bg6 .xmas-lights,.xmas.bg6 .card,.xmas.bg6 .panel,.xmas.bg6 .pagehead,.xmas.bg6 .past article,.xmas.bg6 .file,.xmas.bg6 .cal,.xmas.bg6 .ftpl,.xmas.bg6 .lock,.xmas.bg6 .tblwrap,.xmas.bg6 .fdrop,.xmas.bg6 .bn,.xmas.bg6 .chip,.xmas.bg6 .tabbar,.xmas.bg6 .xmas-toggle,.xmas.bg6 .tint-box,.xmas.bg6 .player{--ink:#1C2B20;--sub:#4C5B50;--green:#0E7A35;--deep:#0B4F26;--line:#E4ECDD;color:var(--ink)}
+.xmas.bg6 .band{background:rgba(255,255,255,.07)}
+.xmas.bg6 .hero{background:rgba(6,10,50,.45);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.xmas.bg6 .xmas-drift{display:none}
+.xmas.bg6 .dark{background:#0B4F26;--deep:#0B4F26}
+.xmas.bg6 .btn{--deep:#0B4F26;--green:#0E7A35}
+.xmas.bg6 .pres{--deep:#0B4F26}
+.xmas.bg6 .rel-list img{mix-blend-mode:normal;background:#fff;border-radius:10px;padding:6px 10px;max-height:52px}
+.xmas.bg6 .rel-list a.named{background:#fff;border-radius:10px;padding:0 14px;--ink:#1C2B20;color:#1C2B20}
+.xmas.bg6 .rel-list a.named img{background:none;padding:0}
+.xmas.bg6 .ph{color:#5A3B00}
+.xmas.bg6 footer{background:rgba(3,3,30,.7)}
+.xmas.bg1{background:#EEF4FB url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg transform='translate(36 40)'%3E%3Cg stroke='%23C3D8EE' stroke-width='2' stroke-linecap='round' fill='none'%3E%3Cpath d='M0-14V14M-12-7L12 7M-12 7L12-7'/%3E%3Cpath d='M-4-10L0-6L4-10M-4 10L0 6L4 10'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(118 112) scale(.6)'%3E%3Cg stroke='%23D3E3F3' stroke-width='2' stroke-linecap='round' fill='none'%3E%3Cpath d='M0-14V14M-12-7L12 7M-12 7L12-7'/%3E%3Cpath d='M-4-10L0-6L4-10M-4 10L0 6L4 10'/%3E%3C/g%3E%3C/g%3E%3Ccircle cx='120' cy='30' r='3' fill='%23D3E3F3'/%3E%3Ccircle cx='30' cy='126' r='2.5' fill='%23D3E3F3'/%3E%3C/svg%3E")}
+.xmas.bg2{background:linear-gradient(#CFE3F6,#EEF5FC 520px,#F6FAFE) fixed}
+.xmas.bg2::after{content:"";position:fixed;left:0;right:0;bottom:0;height:200px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='220' preserveAspectRatio='none'%3E%3Cpath d='M0 220V120C150 60 300 150 480 110S800 40 960 100s180 40 240 10v110z' fill='%23FFFFFF'/%3E%3Cpath d='M0 220V160C200 110 380 190 600 150s400-60 600 0v70z' fill='%23EAF2FA'/%3E%3C/svg%3E") center bottom/100% 100% no-repeat;z-index:-1;pointer-events:none}
+.xmas.bg3{background:#FBF6EC url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ccircle cx='20' cy='24' r='5' fill='%23E8B9BB'/%3E%3Ccircle cx='82' cy='50' r='5' fill='%23BCD9C0'/%3E%3Ccircle cx='44' cy='96' r='5' fill='%23EAD9A6'/%3E%3Ccircle cx='104' cy='104' r='3' fill='%23E8B9BB'/%3E%3Ccircle cx='64' cy='10' r='3' fill='%23BCD9C0'/%3E%3C/svg%3E")}
+.xmas.bg4{background:#F1F7EE url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cg transform='translate(36 44)'%3E%3Cpath d='M0-22L12-4H6L16 12H-16L-6-4H-12Z' fill='%23CFE4C9'/%3E%3Crect x='-3' y='12' width='6' height='7' fill='%23E3D5B8'/%3E%3C/g%3E%3Cg transform='translate(112 110) scale(.7)'%3E%3Cpath d='M0-22L12-4H6L16 12H-16L-6-4H-12Z' fill='%23DBEBD5'/%3E%3Crect x='-3' y='12' width='6' height='7' fill='%23E9DDC5'/%3E%3C/g%3E%3Ccircle cx='110' cy='34' r='3' fill='%23F0D9A0'/%3E%3Ccircle cx='34' cy='116' r='3' fill='%23EFC4C6'/%3E%3C/svg%3E")}
+.xmas.bg5{background:linear-gradient(160deg,#FCE8E4,#FFF6E6 45%,#EAF3FB) fixed}
+
 .xmas .hero{background:linear-gradient(rgba(6,34,20,.74),rgba(6,34,20,.74)),url(img/xmas-hero.jpg) center/cover no-repeat;color:#fff}
 .xmas .xmas-drift path{fill:#F1F6FB}
 .xmas header{background:#fff}
@@ -276,7 +300,7 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   <section class="block band"><div class="wrap cols">
     <div class="main-col panel">
       <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="font-size:26px;font-weight:800">최신 소식</h2><a href="#news" style="font-weight:700">전체 보기</a></div>
-      <div class="list"><a href="#news-ceremony"><span class="pill gold">행사</span><span class="ti">제7·8대 회장단 및 감사 이·취임식</span><span class="dt">2024.12.27</span></a></div>
+      <div class="list" id="c-news-home"></div>
     </div>
     <div class="side dark">
       <h2 style="font-size:22px;font-weight:800">행사 일정</h2>
@@ -286,7 +310,7 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   </div></section>
 
   <section class="block"><div class="wrap">
-    <div style="position:relative;overflow:hidden;background:var(--tint);border-radius:40px;padding:40px;display:flex;flex-wrap:wrap;align-items:center;gap:32px">
+    <div class="tint-box" style="position:relative;overflow:hidden;background:var(--tint);border-radius:40px;padding:40px;display:flex;flex-wrap:wrap;align-items:center;gap:32px">
       <img src="img/bench.jpg" alt="우산을 들고 벤치에 앉은 두 어린이" style="flex:none;width:170px;height:220px;object-fit:cover;border-radius:24px;box-shadow:0 12px 28px rgba(11,79,38,.2)">
       <div style="flex:1 1 320px;min-width:0"><h2 style="font-size:30px;font-weight:800">작은 관심이 모여 큰 나무가 됩니다</h2><p style="color:var(--sub);font-size:17px;margin-top:10px">회원 가입과 후원으로 광양 아이들의 배움을 함께 응원해 주세요.</p></div>
       <a class="btn" href="#join">참여 방법 보기</a>
@@ -305,9 +329,9 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   <section class="block"><div class="wrap cols">
     <div class="main-col">
       <h2 class="t">인사말</h2>
-      <p style="font-size:18px;max-width:38em"><span class="ph">[회장 인사말을 여기에 넣어 주세요]</span></p>
+      <p id="c-greeting" style="font-size:18px;max-width:38em;white-space:pre-line"></p>
       <h2 class="t" style="margin-top:44px">자문위원</h2>
-      <p style="font-size:18px">임원재 · 김재숙 · 김종현</p>
+      <p id="c-advisers" style="font-size:18px"></p>
     </div>
     <div class="side" style="display:flex;justify-content:center;align-items:flex-start"><img src="img/emblem.png" alt="광양교육사랑 엠블럼" style="width:220px;height:auto"></div>
   </div></section>
@@ -317,31 +341,16 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 <div class="view" id="v-presidents">
   <div class="pagehead"><div><h1>역대 회장단</h1><p>광양교육사랑을 이끌어 오신 분들을 소개합니다.</p></div></div>
   <section class="block"><div class="wrap">
-    <div class="pres">
-      <img src="img/president.jpg" alt="제8대 회장 사진">
-      <div class="who"><span class="pill gold" style="align-self:flex-start">제8대 회장단 · 2025년</span><strong>회장 정형기</strong><span style="color:var(--leaf)">2024년 12월 27일 취임</span></div>
-      <dl><dt>상임부회장</dt><dd>문정은</dd><dt>부회장</dt><dd>김태우</dd><dt>감사</dt><dd>한재성 · 신은희</dd><dt>사무국장</dt><dd>송수정</dd><dt>재무국장</dt><dd>하태곤</dd></dl>
-    </div>
+    <div class="pres" id="c-pres"></div>
     <h2 class="t" style="margin-top:48px">역대 회장</h2>
-    <div class="past">
-      <article><span class="pill gold" style="align-self:flex-start">초대</span><strong>서옥란</strong></article>
-      <article><span class="pill gold" style="align-self:flex-start">제2대</span><strong><span class="ph">[이름]</span></strong></article>
-      <article><span class="pill gold" style="align-self:flex-start">제3대</span><strong><span class="ph">[이름]</span></strong></article>
-      <article><span class="pill gold" style="align-self:flex-start">제4대</span><strong>조재인</strong></article>
-      <article><span class="pill gold" style="align-self:flex-start">제5대</span><strong><span class="ph">[이름]</span></strong></article>
-      <article><span class="pill gold" style="align-self:flex-start">제6대</span><strong>안영숙</strong><small>2023년</small></article>
-      <article><span class="pill gold" style="align-self:flex-start">제7대</span><strong>전선미</strong><small>2024년</small></article>
-      <article><span class="pill gold" style="align-self:flex-start">제8대</span><strong>정형기</strong><small>2025년</small></article>
-    </div>
+    <div class="past" id="c-past"></div>
   </div></section>
 </div>
 
 <!-- 소식 목록 -->
 <div class="view" id="v-news">
   <div class="pagehead"><div><h1>소식</h1><p>광양교육사랑의 공지와 행사, 활동 소식입니다.</p></div></div>
-  <section class="block"><div class="wrap"><div class="panel" style="box-shadow:0 8px 28px rgba(28,43,32,.08)"><div class="list">
-    <a href="#news-ceremony"><span class="pill gold">행사</span><span class="ti">제7·8대 회장단 및 감사 이·취임식</span><span class="dt">2024.12.27</span></a>
-  </div></div></div></section>
+  <section class="block"><div class="wrap"><div class="panel" style="box-shadow:0 8px 28px rgba(28,43,32,.08)"><div class="list" id="c-news-list"></div></div></div></section>
 </div>
 
 <!-- 소식 상세 -->
@@ -363,6 +372,16 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
     <h2 class="t">행사 영상</h2>
     <video src="files/title.mp4" poster="img/poster.jpg" controls preload="none" style="width:100%;aspect-ratio:16/9;border-radius:28px;background:var(--ink);display:block"></video>
     <div class="row" style="margin-top:24px"><a class="btn" href="files/leaflet.pdf" target="_blank" rel="noopener">리플릿 열기 (PDF)</a><a class="btn tint" href="#presidents">제8대 회장단 보기</a></div>
+  </div></section>
+</div>
+
+<!-- 소식 글 (관리자 페이지에서 올린 글) -->
+<div class="view" id="v-post">
+  <div class="pagehead"><div><a href="#news" style="font-weight:700">‹ 소식 목록</a><h1 id="post-title" style="margin-top:10px"></h1><p id="post-meta"></p></div></div>
+  <section class="block"><div class="wrap" style="max-width:880px">
+    <img id="post-img" alt="" style="display:none;width:100%;height:auto;border-radius:28px;box-shadow:0 12px 32px rgba(28,43,32,.14);margin-bottom:28px">
+    <p id="post-body" style="font-size:18px;white-space:pre-line"></p>
+    <div class="row" style="margin-top:32px"><a class="btn tint" href="#news">소식 목록으로</a></div>
   </div></section>
 </div>
 
@@ -393,8 +412,10 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
     <div class="main-col">
       <h2 class="t" id="day-title" style="font-size:24px"></h2>
       <div id="day-list" class="files"></div>
+      <h2 class="t" style="font-size:24px;margin-top:40px">다가오는 행사</h2>
+      <div class="files" id="c-up-events"></div>
       <h2 class="t" style="font-size:24px;margin-top:40px">지난 행사</h2>
-      <div class="files"><a class="file" href="#news-ceremony" style="color:var(--ink)"><span class="pill gold">행사</span><span class="meta"><b>제7·8대 회장단 및 감사 이·취임식</b><small>2024.12.27 (금) 17:30 · 광양교육지원청 햇살동 시청각실</small></span></a></div>
+      <div class="files" id="c-past-events"></div>
     </div>
   </div></section>
 </div>
@@ -476,18 +497,18 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   <section class="block"><div class="wrap">
     <h2 class="t">회원가입</h2>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-      <div class="card"><span class="pill solid" style="align-self:flex-start">회비 납부 회원</span><strong>정회원</strong><span class="d">회비를 내고 모임 활동과 행사에 함께하는 회원입니다. 회원 명부를 볼 수 있는 회원 비밀번호를 알려 드립니다.</span><span class="d">회비: <span class="ph">[회비 금액 · 납부 방법]</span></span></div>
+      <div class="card"><span class="pill solid" style="align-self:flex-start">회비 납부 회원</span><strong>정회원</strong><span class="d">회비를 내고 모임 활동과 행사에 함께하는 회원입니다. 회원 명부를 볼 수 있는 회원 비밀번호를 알려 드립니다.</span><span class="d">회비: <span id="c-fee"></span></span></div>
       <div class="card"><span class="pill gold" style="align-self:flex-start">회비 없음</span><strong>홈페이지 회원</strong><span class="d">회비 없이 가입해 광양교육사랑의 소식과 행사 안내를 받는 회원입니다.</span></div>
     </div>
     <div class="row" style="margin-top:24px;align-items:center">
       <a class="btn" id="join-btn" href="#join" target="_blank" rel="noopener">회원가입 신청하기</a>
       <span id="join-note" style="color:var(--sub);font-size:15px"></span>
     </div>
-    <p style="color:var(--sub);font-size:15px;margin-top:12px">신청서에서 회원 구분을 고르고 제출하면 사무국에서 확인한 뒤 연락드립니다. 문의: <span class="ph">[사무국 전화번호]</span></p>
+    <p style="color:var(--sub);font-size:15px;margin-top:12px">신청서에서 회원 구분을 고르고 제출하면 사무국에서 확인한 뒤 연락드립니다. 문의: <span id="c-officePhone"></span></p>
   </div></section>
   <section class="block band"><div class="wrap"><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
     <div class="card"><strong>배너 올리기</strong><span class="d">회원 업체 배너와 외부 광고 배너를 홈페이지에 올릴 수 있습니다. 배너 그림(가로 600×세로 200)과 연결할 주소를 사무국으로 보내 주세요.</span></div>
-    <div class="card"><strong>후원</strong><span class="d"><span class="ph">[후원금이 쓰이는 곳 안내]</span></span><span class="d">후원 계좌: <span class="ph">[은행 · 계좌번호 · 예금주]</span></span></div>
+    <div class="card"><strong>후원</strong><span class="d" id="c-sponsorUse" style="white-space:pre-line"></span><span class="d">후원 계좌: <span id="c-sponsorAccount"></span></span></div>
   </div></div></section>
 </div>
 </main>
@@ -496,7 +517,7 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 
 <div class="rel"><div class="wrap"><h2>관련 기관</h2><div class="rel-list" id="rel-list"></div></div></div>
 
-<footer><div class="wrap"><strong>광양교육사랑</strong><span class="ph">[주소]</span> · 전화 <span class="ph">[전화번호]</span> · 이메일 <span class="ph">[이메일]</span></div></footer>
+<footer><div class="wrap"><strong>광양교육사랑</strong><span id="c-address"></span> · 전화 <span id="c-phone"></span> · 이메일 <span id="c-email"></span> · <a href="admin.html" style="color:inherit;text-decoration:underline">관리자</a></div></footer>
 
 <canvas id="xmas-snow" aria-hidden="true"></canvas>
 <button type="button" class="xmas-toggle" id="xmas-toggle" aria-pressed="true">눈 멈추기</button>
@@ -514,11 +535,14 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 <script src="secure.js"></script>
 <script>
 (function(){
-  var VIEWS=['home','about','presidents','news','news-ceremony','programs','schedule','library','forms','members','manage','join'];
+  var VIEWS=['home','about','presidents','news','news-ceremony','post','programs','schedule','library','forms','members','manage','join'];
   function show(){
-    var h=(location.hash||'#home').slice(1); if(VIEWS.indexOf(h)<0) h='home';
+    var h=(location.hash||'#home').slice(1), postId='';
+    if(/^post-/.test(h)){postId=h.slice(5); h='post';}
+    if(VIEWS.indexOf(h)<0) h='home';
+    if(h==='post'&&window.GyeduPost) window.GyeduPost(postId);
     VIEWS.forEach(function(v){document.getElementById('v-'+v).classList.toggle('on',v===h);});
-    var top=h==='news-ceremony'?'news':h==='manage'?'members':h;
+    var top=(h==='news-ceremony'||h==='post')?'news':h==='manage'?'members':h;
     document.querySelectorAll('nav.main a, .tabbar a').forEach(function(a){
       if(a.getAttribute('href')==='#'+top) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
     });
@@ -527,10 +551,11 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   window.addEventListener('hashchange',show); show();
 
   /* 크리스마스 꾸밈: XMAS_UNTIL 날짜가 지나면 자동으로 평소 모습으로 돌아간다. 바로 끄려면 XMAS_ON을 false로. */
-  var XMAS_ON=true, XMAS_UNTIL=new Date(2027,0,1);
+  var XMAS_ON=true, XMAS_UNTIL=new Date(2027,0,1), BG_CHOICE='6';
   (function(){
     if(!XMAS_ON||new Date()>=XMAS_UNTIL) return;
     document.body.classList.add('xmas');
+    var bgq=(location.search.match(/[?&]bg=([1-6])/)||[])[1]||BG_CHOICE; if(bgq) document.body.classList.add('bg'+bgq);
     var NS='http://www.w3.org/2000/svg', box=document.getElementById('xmas-lights');
     var svg=document.createElementNS(NS,'svg'); svg.setAttribute('viewBox','0 0 1200 34'); svg.setAttribute('preserveAspectRatio','none');
     var d='M0 4', cols=['#B3262E','#E9B93A','#0E7A35','#3B7DD8'], i;
@@ -556,45 +581,98 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
     btn.addEventListener('click',function(){on=!on; btn.textContent=on?'눈 멈추기':'눈 내리기'; btn.setAttribute('aria-pressed',on?'true':'false'); start();});
   })();
 
-  /* 회원가입: 구글 설문 주소와, 임원이 보는 신청 명단(구글 시트) 주소를 넣는다. */
-  var JOIN_FORM_URL='';
-  var APPLICANTS_SHEET_URL='';
-  (function(){
-    function wire(btnId,noteId,url,emptyText){
-      var b=document.getElementById(btnId), n=document.getElementById(noteId);
-      if(/^https:\/\//.test(url)){b.href=url;}
-      else{b.removeAttribute('href');b.removeAttribute('target');b.setAttribute('aria-disabled','true');b.style.opacity='.55';b.style.cursor='default';n.textContent=emptyText;}
-    }
-    wire('join-btn','join-note',JOIN_FORM_URL,'가입 신청서를 준비하고 있습니다.');
-    wire('apply-btn','apply-note',APPLICANTS_SHEET_URL,'구글 시트 주소가 아직 연결되지 않았습니다.');
-  })();
-
   /* 관련 기관: img에 로고 그림 파일을 넣으면 글자 대신 로고가 보인다. */
   var RELATED=[
     {name:'광양시청',link:'https://gwangyang.go.kr/',img:'img/rel-gy.png',showName:true},
     {name:'전남광주통합특별시교육청',link:'https://www.jge.go.kr/jgemain/main.do',img:'img/rel-jne.png'},
     {name:'전남광주통합특별시광양교육지원청',link:'https://help.jne.kr/gyed/main.do',img:'img/rel-gyedu-office.png'},
-    {name:'광양문화원',link:'http://www.xn--hc0bk2yb5hribo85b.kr/',img:'img/rel-munhwa.png'}
+    {name:'광양문화원',link:'http://www.xn--hc0bk2yb5hribo85b.kr/',img:'img/rel-munhwa2.png'}
   ];
   (function(){
     var box=document.getElementById('rel-list');
     RELATED.forEach(function(r){
       var a=document.createElement(r.link?'a':'div'); if(r.link){a.href=r.link; a.target='_blank'; a.rel='noopener';}
-      if(r.img){var im=document.createElement('img'); im.src=r.img; im.alt=r.name+' 홈페이지'; a.appendChild(im);}
-      if(!r.img||r.showName){var t=document.createElement('span'); t.textContent=r.name; a.appendChild(t);}
-      var s=document.createElement('small'); s.textContent=r.link?'홈페이지 바로가기 ↗':'주소 준비 중'; a.appendChild(s);
+      a.title=r.name+' 홈페이지 바로가기';
+      if(r.img){var im=document.createElement('img'); im.src=r.img; im.alt=r.showName?'':r.name+' 홈페이지'; a.appendChild(im);}
+      if(!r.img||r.showName){a.className='named'; var t=document.createElement('span'); t.textContent=r.name; a.appendChild(t);}
       box.appendChild(a);
     });
   })();
 
-  /* 배너: img(그림 파일), name(업체 이름), link(누르면 열릴 주소)를 채우면 그 자리에 표시된다. 비워 두면 빈 자리로 보인다. */
-  var MEMBER_BANNERS=[
-    {img:'',name:'',link:''},
-    {img:'',name:'',link:''},
-    {img:'',name:'',link:''},
-    {img:'',name:'',link:''}
-  ];
-  var AD_BANNER={img:'',name:'',link:''};
+  /* ===== 관리자 페이지(admin.html)에서 바꾸는 내용 =====
+     아래 C는 기본값이다. data/content.json 이 있으면 그 내용으로 덮어쓴다. */
+  var C={
+    info:{greeting:'',address:'',phone:'',email:'',fee:'',officePhone:'',sponsorUse:'',sponsorAccount:'',joinFormUrl:'',sheetUrl:''},
+    current:{gen:'제8대',year:'2025년',president:'정형기',since:'2024년 12월 27일 취임',photo:'img/president.jpg',advisers:'임원재 · 김재숙 · 김종현',
+      officers:[{role:'상임부회장',name:'문정은'},{role:'부회장',name:'김태우'},{role:'감사',name:'한재성 · 신은희'},{role:'사무국장',name:'송수정'},{role:'재무국장',name:'하태곤'}]},
+    past:[{gen:'초대',name:'서옥란',year:''},{gen:'제2대',name:'',year:''},{gen:'제3대',name:'',year:''},{gen:'제4대',name:'조재인',year:''},{gen:'제5대',name:'',year:''},{gen:'제6대',name:'안영숙',year:'2023년'},{gen:'제7대',name:'전선미',year:'2024년'},{gen:'제8대',name:'정형기',year:'2025년'}],
+    news:[{id:'ceremony',cat:'행사',title:'제7·8대 회장단 및 감사 이·취임식',date:'2024-12-27',body:'',img:'',legacy:'news-ceremony'}],
+    events:[{date:'2024-12-27',title:'제7·8대 회장단 및 감사 이·취임식',info:'17:30 · 광양교육지원청 햇살동 시청각실',post:'ceremony'}],
+    files:[
+      {k:'행사자료',t:'제7·8대 회장단 및 감사 이·취임식 리플릿 (식순·임원 명단·주요 사업)',e:'PDF',d:'2024.12.27',link:'files/leaflet.pdf'},
+      {k:'영상·음원',t:'2025 이·취임식 타이틀 영상 (50초)',e:'MP4',d:'2024.12.26',video:'files/title.mp4'},
+      {k:'영상·음원',t:'행사 음원 (1분 53초)',e:'MP3',d:'',audio:'files/music.mp4'},
+      {k:'사진',t:'이·취임식 초대장 (움직이는 이미지)',e:'GIF',d:'2024.12.27',link:'img/invite.gif'},
+      {k:'서식',t:'입회원서(회원 가입 신청서) 양식',e:'HWP',d:''}
+    ],
+    banners:{members:[{img:'',name:'',link:''},{img:'',name:'',link:''},{img:'',name:'',link:''},{img:'',name:'',link:''}],ad:{img:'',name:'',link:''}}
+  };
+  function el(tag,cls,txt){var n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n;}
+  function byId(id){return document.getElementById(id);}
+  function fill(id,val,empty){var n=byId(id); if(!n) return; n.textContent=''; if(val) n.appendChild(document.createTextNode(val)); else n.appendChild(el('span','ph',empty));}
+  function dot(d){return d?String(d).replace(/-/g,'.'):'';}
+  function postHref(n){return '#'+(n.legacy||('post-'+n.id));}
+  function sortedNews(){return C.news.slice().sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0;});}
+
+  function drawInfo(){
+    var i=C.info;
+    fill('c-greeting',i.greeting,'[회장 인사말을 여기에 넣어 주세요]');
+    fill('c-address',i.address,'[주소]'); fill('c-phone',i.phone,'[전화번호]'); fill('c-email',i.email,'[이메일]');
+    fill('c-fee',i.fee,'[회비 금액 · 납부 방법]'); fill('c-officePhone',i.officePhone||i.phone,'[사무국 전화번호]');
+    fill('c-sponsorUse',i.sponsorUse,'[후원금이 쓰이는 곳 안내]'); fill('c-sponsorAccount',i.sponsorAccount,'[은행 · 계좌번호 · 예금주]');
+    wire('join-btn','join-note',i.joinFormUrl,'가입 신청서를 준비하고 있습니다.');
+    wire('apply-btn','apply-note',i.sheetUrl,'구글 시트 주소가 아직 연결되지 않았습니다.');
+  }
+  function wire(btnId,noteId,url,emptyText){
+    var b=byId(btnId), n=byId(noteId);
+    if(/^https:\/\//.test(url||'')){b.href=url;b.target='_blank';b.removeAttribute('aria-disabled');b.style.opacity='';b.style.cursor='';n.textContent='';}
+    else{b.removeAttribute('href');b.removeAttribute('target');b.setAttribute('aria-disabled','true');b.style.opacity='.55';b.style.cursor='default';n.textContent=emptyText;}
+  }
+  function drawPres(){
+    var c=C.current, box=byId('c-pres'); box.textContent='';
+    byId('c-advisers').textContent=c.advisers||'';
+    if(c.photo){var im=el('img'); im.src=c.photo; im.alt=c.gen+' 회장 사진'; box.appendChild(im);}
+    var who=el('div','who'), pill=el('span','pill gold',c.gen+' 회장단'+(c.year?' · '+c.year:'')); pill.style.alignSelf='flex-start'; who.appendChild(pill);
+    who.appendChild(el('strong',null,'회장 '+(c.president||'')));
+    if(c.since){var sp=el('span',null,c.since); sp.style.color='var(--leaf)'; who.appendChild(sp);}
+    box.appendChild(who);
+    var dl=el('dl'); (c.officers||[]).forEach(function(o){if(!o.role&&!o.name) return; dl.appendChild(el('dt',null,o.role)); dl.appendChild(el('dd',null,o.name));});
+    if(dl.childNodes.length) box.appendChild(dl);
+    var past=byId('c-past'); past.textContent='';
+    C.past.forEach(function(p){
+      var a=el('article'), g=el('span','pill gold',p.gen); g.style.alignSelf='flex-start'; a.appendChild(g);
+      var st=el('strong'); if(p.name) st.textContent=p.name; else st.appendChild(el('span','ph','[이름]')); a.appendChild(st);
+      if(p.year) a.appendChild(el('small',null,p.year));
+      past.appendChild(a);
+    });
+  }
+  function newsRow(n){var a=el('a'); a.href=postHref(n); a.appendChild(el('span','pill gold',n.cat||'소식')); a.appendChild(el('span','ti',n.title)); a.appendChild(el('span','dt',dot(n.date))); return a;}
+  function drawNews(){
+    var all=sortedNews(), home=byId('c-news-home'), list=byId('c-news-list'); home.textContent=''; list.textContent='';
+    all.slice(0,5).forEach(function(n){home.appendChild(newsRow(n));});
+    all.forEach(function(n){list.appendChild(newsRow(n));});
+    if(!all.length){var d=el('div','item'); d.appendChild(el('span','ti','아직 올라온 소식이 없습니다.')); list.appendChild(d); home.appendChild(d.cloneNode(true));}
+    var h=(location.hash||'').slice(1); if(/^post-/.test(h)) window.GyeduPost(h.slice(5));
+  }
+  window.GyeduPost=function(id){
+    var n=null; C.news.forEach(function(x){if(String(x.id)===id) n=x;});
+    var im=byId('post-img');
+    if(!n){byId('post-title').textContent='소식을 찾을 수 없습니다'; byId('post-meta').textContent=''; byId('post-body').textContent='지워졌거나 주소가 바뀐 글입니다.'; im.style.display='none'; return;}
+    byId('post-title').textContent=n.title; byId('post-meta').textContent=(n.cat||'소식')+' · '+dot(n.date); byId('post-body').textContent=n.body||'';
+    if(n.img){im.src=n.img; im.alt=n.title+' 사진'; im.style.display='block';} else {im.removeAttribute('src'); im.style.display='none';}
+  };
+
+  /* 배너: 그림이 없으면 빈 자리로 보인다. */
   function banner(b,i,wide){
     var has=b&&b.img, n=document.createElement(has&&b.link?'a':'div');
     n.className='bn'+(wide?' wide':'')+(has?'':' empty');
@@ -608,21 +686,14 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
     }
     return n;
   }
-  (function(){
-    var m=document.getElementById('bn-members'); MEMBER_BANNERS.forEach(function(b,i){m.appendChild(banner(b,i,false));});
-    document.getElementById('bn-ad').appendChild(banner(AD_BANNER,0,true));
-  })();
+  function drawBanners(){
+    var m=byId('bn-members'), ad=byId('bn-ad'); m.textContent=''; ad.textContent='';
+    (C.banners.members||[]).forEach(function(b,i){m.appendChild(banner(b,i,false));});
+    ad.appendChild(banner(C.banners.ad||{},0,true));
+  }
 
   /* 자료실 */
-  var FILES=[
-    {k:'행사자료',t:'제7·8대 회장단 및 감사 이·취임식 리플릿 (식순·임원 명단·주요 사업)',e:'PDF',d:'2024.12.27',link:'files/leaflet.pdf'},
-    {k:'영상·음원',t:'2025 이·취임식 타이틀 영상 (50초)',e:'MP4',d:'2024.12.26',video:'files/title.mp4'},
-    {k:'영상·음원',t:'행사 음원 (1분 53초)',e:'MP3',d:'',audio:'files/music.mp4'},
-    {k:'사진',t:'이·취임식 초대장 (움직이는 이미지)',e:'GIF',d:'2024.12.27',link:'img/invite.gif'},
-    {k:'서식',t:'입회원서(회원 가입 신청서) 양식',e:'HWP',d:''}
-  ];
-  var cur='전체', chips=document.getElementById('lib-chips'), list=document.getElementById('lib-list'), player=document.getElementById('lib-player');
-  function el(tag,cls,txt){var n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n;}
+  var cur='전체', chips=byId('lib-chips'), list=byId('lib-list'), player=byId('lib-player');
   function drawLib(){
     chips.textContent='';
     ['전체','행사자료','영상·음원','사진','서식'].forEach(function(c){
@@ -630,9 +701,9 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
       b.addEventListener('click',function(){cur=c; drawLib();}); chips.appendChild(b);
     });
     list.textContent='';
-    FILES.filter(function(f){return cur==='전체'||f.k===cur;}).forEach(function(f){
+    C.files.filter(function(f){return cur==='전체'||f.k===cur;}).forEach(function(f){
       var row=el('div','file'); row.appendChild(el('span','pill',f.k));
-      var m=el('span','meta'); m.appendChild(el('b',null,f.t)); m.appendChild(el('small',null,f.e+(f.d?' · '+f.d:''))); row.appendChild(m);
+      var m=el('span','meta'); m.appendChild(el('b',null,f.t)); m.appendChild(el('small',null,[f.e,f.d].filter(Boolean).join(' · '))); row.appendChild(m);
       if(f.link){var a=el('a','act','열기'); a.href=f.link; a.target='_blank'; a.rel='noopener'; row.appendChild(a);}
       else if(f.video||f.audio){var b=el('button','act','재생'); b.type='button'; b.addEventListener('click',function(){play(f);}); row.appendChild(b);}
       else row.appendChild(el('span','none','파일 준비 중'));
@@ -645,13 +716,18 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
     var p=m.play(); if(p&&p.catch) p.catch(function(){});
     player.scrollIntoView({block:'nearest'});
   }
-  drawLib();
 
   /* 달력 */
-  var EVENTS={'2024-12-27':[{t:'제7·8대 회장단 및 감사 이·취임식',s:'17:30 · 광양교육지원청 햇살동 시청각실',href:'#news-ceremony'}]};
+  var EVENTS={};
   var now=new Date(), y=now.getFullYear(), mo=now.getMonth(), sel=now.getDate();
-  var grid=document.getElementById('cal-grid'), title=document.getElementById('cal-title'), dayTitle=document.getElementById('day-title'), dayList=document.getElementById('day-list');
+  var grid=byId('cal-grid'), title=byId('cal-title'), dayTitle=byId('day-title'), dayList=byId('day-list');
   function key(d){return y+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');}
+  function evHref(e){var n=null; if(e.post) C.news.forEach(function(x){if(String(x.id)===String(e.post)) n=x;}); return n?postHref(n):'';}
+  function evRow(e,withDate){
+    var h=evHref(e), a=el(h?'a':'div','file'); if(h){a.href=h;} a.style.color='var(--ink)';
+    a.appendChild(el('span','pill gold','행사')); var m=el('span','meta'); m.appendChild(el('b',null,e.title));
+    m.appendChild(el('small',null,[withDate?dot(e.date):'',e.info].filter(Boolean).join(' · '))); a.appendChild(m); return a;
+  }
   function drawCal(){
     title.textContent=y+'년 '+(mo+1)+'월'; grid.textContent='';
     ['일','월','화','수','목','금','토'].forEach(function(w){grid.appendChild(el('span','w',w));});
@@ -666,11 +742,31 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
     dayTitle.textContent=(mo+1)+'월 '+sel+'일 일정'; dayList.textContent='';
     var ev=EVENTS[key(sel)]||[];
     if(!ev.length){var n=el('div','file'); n.appendChild(el('span','meta','이 날은 등록된 일정이 없습니다.')); dayList.appendChild(n);}
-    ev.forEach(function(e){var a=el('a','file'); a.href=e.href; a.style.color='inherit'; a.appendChild(el('span','pill gold','행사')); var m=el('span','meta'); m.appendChild(el('b',null,e.t)); m.appendChild(el('small',null,e.s)); a.appendChild(m); dayList.appendChild(a);});
+    ev.forEach(function(e){dayList.appendChild(evRow(e,false));});
   }
-  document.getElementById('cal-prev').addEventListener('click',function(){mo--; if(mo<0){mo=11;y--;} drawCal();});
-  document.getElementById('cal-next').addEventListener('click',function(){mo++; if(mo>11){mo=0;y++;} drawCal();});
-  drawCal();
+  function drawEvents(){
+    EVENTS={}; C.events.forEach(function(e){(EVENTS[e.date]=EVENTS[e.date]||[]).push(e);});
+    var t=new Date(), today=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+    var up=C.events.filter(function(e){return e.date>=today;}).sort(function(a,b){return a.date<b.date?-1:1;});
+    var past=C.events.filter(function(e){return e.date<today;}).sort(function(a,b){return a.date<b.date?1:-1;});
+    [['c-up-events',up,'예정된 행사가 아직 없습니다.'],['c-past-events',past,'지난 행사가 없습니다.']].forEach(function(x){
+      var box=byId(x[0]); box.textContent='';
+      if(!x[1].length){var n=el('div','file'); n.appendChild(el('span','meta',x[2])); box.appendChild(n);}
+      x[1].forEach(function(e){box.appendChild(evRow(e,true));});
+    });
+    drawCal();
+  }
+  byId('cal-prev').addEventListener('click',function(){mo--; if(mo<0){mo=11;y--;} drawCal();});
+  byId('cal-next').addEventListener('click',function(){mo++; if(mo>11){mo=0;y++;} drawCal();});
+
+  function drawAll(){drawInfo(); drawPres(); drawNews(); drawBanners(); drawLib(); drawEvents();}
+  drawAll();
+  fetch('data/content.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+    if(!d||typeof d!=='object') return;
+    ['info','current','banners'].forEach(function(k){if(d[k]&&typeof d[k]==='object'){for(var p in d[k]) C[k][p]=d[k][p];}});
+    ['past','news','events','files'].forEach(function(k){if(Array.isArray(d[k])) C[k]=d[k];});
+    drawAll();
+  }).catch(function(){});
 })();
 </script>
 </body>
