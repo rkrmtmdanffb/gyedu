@@ -161,6 +161,44 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 .tbl{width:100%;border-collapse:collapse;font-size:16px;min-width:480px}
 .tbl th{background:var(--deep);color:#fff;text-align:left;padding:14px 18px;font-size:15px;white-space:nowrap}
 .tbl td{padding:14px 18px;border-top:1px solid var(--line)}
+.rel{padding:28px 0 0}
+.rel h2{font-size:15px;font-weight:700;color:var(--sub);margin-bottom:12px}
+.rel-list{display:flex;flex-wrap:wrap;gap:12px}
+.rel-list a,.rel-list div{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 22px;border-radius:16px;border:1px solid #B9CDB0;background:#fff;color:var(--ink);font-size:17px;font-weight:700}
+.rel-list a:hover{border-color:var(--green);color:var(--deep)}
+.rel-list img{height:40px;width:auto;display:block;border-radius:6px}
+.rel-list small{font-size:13px;font-weight:400;color:var(--sub)}
+/* 크리스마스 꾸밈: body에 xmas가 붙어 있을 때만 적용된다. */
+.xmas{--xred:#B3262E}
+.xmas .topbar{background:var(--xred);color:#fff}
+.xmas-msg{display:none}
+.xmas .xmas-msg{display:inline}
+.xmas .xmas-off{display:none}
+.xmas-lights{display:none}
+.xmas .xmas-lights{display:block;height:34px;overflow:hidden}
+.xmas-lights svg{display:block;width:100%;height:34px}
+.xmas{background:#F1F6FB}
+.xmas .hero{background:linear-gradient(rgba(6,34,20,.74),rgba(6,34,20,.74)),url(img/xmas-hero.jpg) center/cover no-repeat;color:#fff}
+.xmas .xmas-drift path{fill:#F1F6FB}
+.xmas header{background:#fff}
+.xmas .xmas-lights{background:#fff}
+.xmas .hero p{color:#E2EFD3}
+.xmas .hero h1 em{color:#F4D77A}
+.xmas .hero .pic{background:#17663A;box-shadow:0 24px 48px rgba(0,0,0,.28)}
+.xmas .hero .btn:not(.light){background:var(--xred)}
+.xmas .hero .btn:not(.light):hover{background:#8E1D24}
+.xmas .hero .pill{background:#fff;color:var(--xred)}
+.xmas-only{display:none}
+.xmas .xmas-only{display:block}
+.xgal{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.xgal img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:20px;box-shadow:0 8px 24px rgba(28,43,32,.12)}
+.xmas-drift{display:none}
+.xmas .xmas-drift{display:block;position:absolute;left:0;right:0;bottom:-1px;width:100%;height:46px}
+.xmas .hero-in{padding-bottom:92px}
+#xmas-snow{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:4;display:none}
+.xmas #xmas-snow{display:block}
+.xmas-toggle{display:none}
+.xmas .xmas-toggle{display:inline-flex;align-items:center;position:fixed;left:16px;bottom:16px;z-index:7;height:44px;padding:0 16px;border-radius:999px;border:1px solid #B9CDB0;background:#fff;color:var(--ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(28,43,32,.14)}
 .tabbar{display:none}
 @media (max-width:760px){
   nav.main,.topbar{display:none}
@@ -181,6 +219,9 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   .file{flex-wrap:wrap}
   body{padding-bottom:76px}
   footer{margin-top:16px}
+  .xmas .xmas-toggle{bottom:88px}
+  .xmas .topbar{display:block}
+  .xmas .topbar a{display:none}
   .tabbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:6px 6px 10px;z-index:6}
   .tabbar a{height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:500;color:#5B6A5F}
   .tabbar a[aria-current="page"]{color:var(--green);font-weight:700}
@@ -189,26 +230,39 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 </style>
 </head>
 <body>
-<div class="topbar"><div class="wrap" style="display:flex;justify-content:space-between;gap:12px"><span>광양의 배움을 함께 가꾸는 사람들</span><a href="#join" style="color:#fff;font-weight:700">회원가입</a></div></div>
+<div class="topbar"><div class="wrap" style="display:flex;justify-content:space-between;gap:12px"><span><span class="xmas-off">광양의 배움을 함께 가꾸는 사람들</span><span class="xmas-msg">메리 크리스마스! 광양의 모든 아이들에게 따뜻한 겨울이 되기를 바랍니다</span></span><a href="#join" style="color:#fff;font-weight:700">회원가입</a></div></div>
 <header><div class="wrap">
   <a class="logo" href="#home"><img src="img/logo.png" alt="광양교육사랑"></a>
   <nav class="main" aria-label="주 메뉴">
     <a href="#about">소개</a><a href="#presidents">역대 회장단</a><a href="#news">소식</a><a href="#programs">주요 사업</a><a href="#schedule">행사 일정</a><a href="#library">자료실</a><a href="#forms">행사 서류</a><a href="#members">회원 명부</a><a href="#join">참여·후원</a>
   </nav>
 </div></header>
+<div class="xmas-lights" id="xmas-lights" aria-hidden="true"></div>
 
 <main>
 <!-- 홈 -->
 <div class="view" id="v-home">
   <div class="hero"><div class="hero-in">
     <div>
-      <span class="pill gold">책에서 새싹이 자라듯</span>
+      <span class="pill gold"><span class="xmas-off">책에서 새싹이 자라듯</span><span class="xmas-msg">메리 크리스마스</span></span>
       <h1 style="margin-top:16px">아이들의 내일을<br><em>함께 키우는</em> 광양</h1>
       <p>광양교육사랑은 광양의 학부모와 시민이 함께 아이들의 배움과 성장을 응원하는 모임입니다.</p>
       <div class="row"><a class="btn" href="#join">함께 참여하기</a><a class="btn light" href="#programs">주요 사업 보기</a></div>
     </div>
     <div><div class="pic"><img src="img/kids.png" alt="물웅덩이에서 뛰노는 어린이들"></div></div>
-  </div></div>
+  </div>
+  <svg class="xmas-drift" viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46V26C80 6 150 34 240 22S400 2 500 20s170 16 260 4 180-10 250 6 130 8 190-6v22z" fill="#FFFFFF"/></svg>
+  </div>
+
+  <section class="block xmas-only" style="padding-bottom:0"><div class="wrap">
+    <span class="eyebrow" style="color:#B3262E">메리 크리스마스</span><h2 class="t" style="margin-bottom:20px">따뜻한 연말 보내세요</h2>
+    <div class="xgal">
+      <img src="img/xmas-g1.jpg" alt="눈 덮인 마을 광장의 크리스마스트리 그림">
+      <img src="img/xmas-g2.jpg" alt="눈 내리는 밤의 크리스마스 시장과 마차">
+      <img src="img/xmas-g3.jpg" alt="벽난로 앞에 놓인 크리스마스 선물 상자">
+      <img src="img/xmas-g4.jpg" alt="눈 내리는 하늘을 나는 산타 썰매">
+    </div>
+  </div></section>
 
   <section class="block"><div class="wrap"><div class="grid">
     <a class="card" href="#news"><span class="ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0E7A35" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1zM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg></span><strong>소식</strong><span class="d">모임 소식과 행사 이야기를 전합니다.</span></a>
@@ -440,7 +494,12 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 
 <div class="adstrip"><div class="wrap"><div id="bn-ad"></div></div></div>
 
+<div class="rel"><div class="wrap"><h2>관련 기관</h2><div class="rel-list" id="rel-list"></div></div></div>
+
 <footer><div class="wrap"><strong>광양교육사랑</strong><span class="ph">[주소]</span> · 전화 <span class="ph">[전화번호]</span> · 이메일 <span class="ph">[이메일]</span></div></footer>
+
+<canvas id="xmas-snow" aria-hidden="true"></canvas>
+<button type="button" class="xmas-toggle" id="xmas-toggle" aria-pressed="true">눈 멈추기</button>
 
 <nav class="tabbar" aria-label="하단 메뉴">
   <a href="#home"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9z"/></svg>홈</a>
@@ -467,6 +526,36 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
   }
   window.addEventListener('hashchange',show); show();
 
+  /* 크리스마스 꾸밈: XMAS_UNTIL 날짜가 지나면 자동으로 평소 모습으로 돌아간다. 바로 끄려면 XMAS_ON을 false로. */
+  var XMAS_ON=true, XMAS_UNTIL=new Date(2027,0,1);
+  (function(){
+    if(!XMAS_ON||new Date()>=XMAS_UNTIL) return;
+    document.body.classList.add('xmas');
+    var NS='http://www.w3.org/2000/svg', box=document.getElementById('xmas-lights');
+    var svg=document.createElementNS(NS,'svg'); svg.setAttribute('viewBox','0 0 1200 34'); svg.setAttribute('preserveAspectRatio','none');
+    var d='M0 4', cols=['#B3262E','#E9B93A','#0E7A35','#3B7DD8'], i;
+    for(i=0;i<12;i++) d+=' Q'+(i*100+50)+' 26 '+((i+1)*100)+' 4';
+    var wire=document.createElementNS(NS,'path'); wire.setAttribute('d',d); wire.setAttribute('fill','none'); wire.setAttribute('stroke','#4C5B50'); wire.setAttribute('stroke-width','1.5'); svg.appendChild(wire);
+    for(i=0;i<24;i++){var c=document.createElementNS(NS,'ellipse'); c.setAttribute('cx',i*50+25); c.setAttribute('cy',i%2?12:19); c.setAttribute('rx',5); c.setAttribute('ry',7); c.setAttribute('fill',cols[i%4]); svg.appendChild(c);}
+    box.appendChild(svg);
+
+    var cv=document.getElementById('xmas-snow'), ctx=cv.getContext('2d'), flakes=[], W=0, H=0, raf=0, on=true;
+    var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function size(){var r=window.devicePixelRatio||1; W=window.innerWidth; H=window.innerHeight; cv.width=W*r; cv.height=H*r; ctx.setTransform(r,0,0,r,0,0);
+      var n=Math.round(Math.min(110,W/11)); flakes=[]; for(var k=0;k<n;k++) flakes.push({x:Math.random()*W,y:Math.random()*H,r:1.4+Math.random()*2.8,v:.5+Math.random()*1.1,s:Math.random()*6.28,w:.3+Math.random()*.6});}
+    function draw(move){ctx.clearRect(0,0,W,H);
+      for(var k=0;k<flakes.length;k++){var f=flakes[k];
+        if(move){f.y+=f.v; f.s+=.012; f.x+=Math.sin(f.s)*f.w; if(f.y>H+6){f.y=-6; f.x=Math.random()*W;}}
+        ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,6.2832); ctx.fillStyle='rgba(255,255,255,.95)'; ctx.fill(); ctx.lineWidth=1; ctx.strokeStyle='rgba(120,150,185,.55)'; ctx.stroke();}}
+    function loop(){draw(true); raf=requestAnimationFrame(loop);}
+    function start(){cancelAnimationFrame(raf); if(!on){ctx.clearRect(0,0,W,H);return;} if(still) draw(false); else loop();}
+    size(); start();
+    window.addEventListener('resize',function(){size(); start();});
+    document.addEventListener('visibilitychange',function(){if(document.hidden) cancelAnimationFrame(raf); else start();});
+    var btn=document.getElementById('xmas-toggle');
+    btn.addEventListener('click',function(){on=!on; btn.textContent=on?'눈 멈추기':'눈 내리기'; btn.setAttribute('aria-pressed',on?'true':'false'); start();});
+  })();
+
   /* 회원가입: 구글 설문 주소와, 임원이 보는 신청 명단(구글 시트) 주소를 넣는다. */
   var JOIN_FORM_URL='';
   var APPLICANTS_SHEET_URL='';
@@ -478,6 +567,24 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
     }
     wire('join-btn','join-note',JOIN_FORM_URL,'가입 신청서를 준비하고 있습니다.');
     wire('apply-btn','apply-note',APPLICANTS_SHEET_URL,'구글 시트 주소가 아직 연결되지 않았습니다.');
+  })();
+
+  /* 관련 기관: img에 로고 그림 파일을 넣으면 글자 대신 로고가 보인다. */
+  var RELATED=[
+    {name:'광양시청',link:'https://gwangyang.go.kr/',img:''},
+    {name:'전남광주통합특별시교육청',link:'https://www.jge.go.kr/jgemain/main.do',img:''},
+    {name:'전남광주통합특별시광양교육지원청',link:'https://help.jne.kr/gyed/main.do',img:'img/rel-gyedu-office.png'},
+    {name:'광양문화원',link:'http://www.xn--hc0bk2yb5hribo85b.kr/',img:'img/rel-munhwa.png'}
+  ];
+  (function(){
+    var box=document.getElementById('rel-list');
+    RELATED.forEach(function(r){
+      var a=document.createElement(r.link?'a':'div'); if(r.link){a.href=r.link; a.target='_blank'; a.rel='noopener';}
+      if(r.img){var im=document.createElement('img'); im.src=r.img; im.alt=r.name+' 홈페이지'; a.appendChild(im);}
+      else{var t=document.createElement('span'); t.textContent=r.name; a.appendChild(t);}
+      var s=document.createElement('small'); s.textContent=r.link?'홈페이지 바로가기 ↗':'주소 준비 중'; a.appendChild(s);
+      box.appendChild(a);
+    });
   })();
 
   /* 배너: img(그림 파일), name(업체 이름), link(누르면 열릴 주소)를 채우면 그 자리에 표시된다. 비워 두면 빈 자리로 보인다. */
