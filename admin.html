@@ -51,7 +51,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 </style>
 </head>
 <body>
-<div class="top"><div class="in"><strong>광양교육사랑 올리기·관리</strong><span><span id="who"></span> <a href="./">홈페이지로 가기</a></span></div></div>
+<div class="top"><div class="in"><strong>광양교육사랑 올리기·관리</strong><span style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span id="who"></span><a href="./">홈페이지로 가기</a><button type="button" id="logout" hidden style="min-height:40px;padding:0 16px;border-radius:999px;border:1px solid #fff;background:transparent;color:#fff;font:inherit;font-weight:700;cursor:pointer">나가기</button></span></div></div>
 <div class="wrap">
 
   <!-- 들어가기 -->
@@ -265,7 +265,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
   function showTab(id){TABS.forEach(function(t){$('t-'+t[0]).classList.toggle('on',t[0]===id); var b=$('tab-'+t[0]); if(b) b.setAttribute('aria-selected',t[0]===id?'true':'false');});}
   function enter(){
     $('p-login').hidden=true; $('p-setup').hidden=true; $('p-work').hidden=false;
-    $('who').textContent=role==='o'?'임원으로 들어옴 ·':'정회원으로 들어옴 ·';
+    $('who').textContent=role==='o'?'임원으로 들어옴':'정회원으로 들어옴'; $('logout').hidden=false;
     var box=$('tabs'); box.textContent=''; var sep=false;
     TABS.forEach(function(t){ if(t[2]==='o'&&role!=='o') return;
       if(t[2]==='o'&&!sep){sep=true; box.appendChild(el('span','sep')); box.appendChild(el('small',null,'임원용'));}
@@ -385,6 +385,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
       .then(function(t){token=t; return readJson('data/content.json');})
       .then(function(c){C=c; $('pw').value=''; enter();},function(e){token=''; role=''; say(m,e&&e.user?e.message:why(e),'bad');}).then(function(){busy(f,false);});
   });
+  /* 나가기: 열쇠와 내용을 지우고 처음 화면으로 돌아간다. */
+  $('logout').addEventListener('click',function(){token=''; role=''; C=null; location.reload();});
   $('go-setup').addEventListener('click',function(ev){ev.preventDefault(); $('p-login').hidden=true; $('p-setup').hidden=false;});
   $('su-back').addEventListener('click',function(){$('p-setup').hidden=true; $('p-login').hidden=false;});
   $('f-setup').addEventListener('submit',function(ev){ev.preventDefault(); var f=this, m=$('m-setup'), tok=$('su-token').value.trim(), mpw=$('su-m').value, opw=$('su-o').value;
