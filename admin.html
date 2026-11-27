@@ -311,6 +311,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
           <div><label for="in-address">주소</label><input type="text" id="in-address"></div>
           <div><label for="in-phone">전화</label><input type="text" id="in-phone"></div>
           <div><label for="in-email">이메일</label><input type="text" id="in-email"></div>
+          <div><label for="in-manager">담당자 (이름·직책)</label><input type="text" id="in-manager" placeholder="예: 사무국장 홍길동"></div>
+          <div><label for="in-kakaoUrl">카카오톡 문의 주소 (있으면)</label><input type="url" id="in-kakaoUrl" placeholder="https://open.kakao.com/…"></div>
           <div><label for="in-officePhone">사무국 전화 (가입 문의)</label><input type="text" id="in-officePhone"></div>
         </div>
         <label for="in-fee">회비 금액 · 내는 방법</label><input type="text" id="in-fee">
@@ -504,7 +506,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
       box.appendChild(f);
     });
   }
-  var INFO=['greeting','address','phone','email','officePhone','fee','sponsorUse','sponsorAccount','joinFormUrl','sheetUrl'];
+  var INFO=['greeting','address','phone','email','manager','kakaoUrl','officePhone','fee','sponsorUse','sponsorAccount','joinFormUrl','sheetUrl'];
   function fillInfo(){INFO.forEach(function(k){$('in-'+k).value=C.info[k]||'';});}
   function fillPres(){var c=C.current; ['gen','year','president','since','advisers'].forEach(function(k){$('pr-'+k).value=c[k]||'';});
     $('pr-officers').value=(c.officers||[]).map(function(o){return o.role+', '+o.name;}).join('\n');
@@ -538,7 +540,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
   },'넣었습니다. 1~2분 뒤 달력에 나옵니다.');});
   $('f-info').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
     var v={}; INFO.forEach(function(k){v[k]=$('in-'+k).value.trim();});
-    if((v.joinFormUrl&&!/^https:\/\//.test(v.joinFormUrl))||(v.sheetUrl&&!/^https:\/\//.test(v.sheetUrl))) throw userErr('주소는 https:// 로 시작해야 합니다.');
+    if((v.joinFormUrl&&!/^https:\/\//.test(v.joinFormUrl))||(v.sheetUrl&&!/^https:\/\//.test(v.sheetUrl))||(v.kakaoUrl&&!/^https:\/\//.test(v.kakaoUrl))) throw userErr('주소는 https:// 로 시작해야 합니다.');
     return save(function(c){INFO.forEach(function(k){c.info[k]=v[k];});},'기본 정보 바꿈');
   },'저장했습니다. 1~2분 뒤 홈페이지에 나옵니다.');});
   $('f-pres').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){

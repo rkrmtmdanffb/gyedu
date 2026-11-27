@@ -366,6 +366,40 @@ a.gal-item:hover img{transform:scale(1.05)}
 .sky-toggle{display:inline-flex;align-items:center;gap:6px;position:fixed;left:16px;bottom:68px;z-index:7;height:44px;padding:0 16px;border-radius:999px;border:1px solid #B9CDB0;background:#fff;color:var(--ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.12)}
 body:not(.xmas) .sky-toggle{bottom:16px}
 @media (max-width:760px){.sky-toggle{bottom:140px}body:not(.xmas) .sky-toggle{bottom:88px}}
+
+/* 맨 아래 연락처 */
+.ft{display:grid;grid-template-columns:1.1fr 1.5fr auto;gap:28px 40px;align-items:start}
+.ft-a p{margin:6px 0 0;max-width:22em}
+.ft-b{margin:0;display:grid;gap:8px}
+.ft-b div{display:flex;gap:14px}
+.ft-b dt{flex:none;width:4em;color:#fff;font-weight:700}
+.ft-b dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.ft-b a{color:inherit;text-decoration:underline}
+.ft-c{display:flex;flex-direction:column;gap:10px}
+.ft-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.7);background:none;color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap}
+.ft-btn.fill{background:#fff;color:#0B4F26;border-color:#fff}
+footer .ph{color:#5A3B00}
+@media (max-width:860px){.ft{grid-template-columns:1fr}.ft-c{flex-direction:row;flex-wrap:wrap}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* 문의 도우미 */
+.chat[hidden],.chat-fab[hidden]{display:none!important}
+.chat-fab{position:fixed;right:18px;bottom:18px;z-index:30;display:inline-flex;align-items:center;gap:8px;height:56px;padding:0 22px;border-radius:999px;border:0;background:#0E7A35;color:#fff;font:inherit;font-size:20px;font-weight:800;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+.chat-fab span{font-size:17px}
+.chat{position:fixed;right:18px;bottom:86px;z-index:31;width:min(380px,calc(100vw - 24px));height:min(560px,calc(100vh - 120px));background:#fff;color:#1C2B20;border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}
+.chat-h{background:#0B4F26;color:#fff;padding:14px 56px 12px 18px;position:relative}
+.chat-h b{display:block;font-size:18px}.chat-h small{opacity:.85;font-size:13px}
+.chat-h button{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:24px;line-height:1;cursor:pointer}
+.chat-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#F4F8F0}
+.chat-log .m{max-width:86%;padding:10px 14px;border-radius:16px;font-size:16px;line-height:1.55;white-space:pre-line;overflow-wrap:anywhere}
+.chat-log .bot{align-self:flex-start;background:#fff;border:1px solid #DDE7D5;border-top-left-radius:4px}
+.chat-log .me{align-self:flex-end;background:#0E7A35;color:#fff;border-top-right-radius:4px}
+.chat-log .m a{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;margin:8px 6px 0 0;border-radius:999px;background:#EEF6E6;color:#0B4F26;font-weight:700;font-size:15px}
+.chat-chips{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;border-top:1px solid #DDE7D5;flex:none;scrollbar-width:thin}
+.chat-chips button{flex:none;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid #9DBF8F;background:#fff;color:#0B4F26;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.chat-f{display:flex;gap:8px;padding:10px 12px 14px;flex:none}
+.chat-f input{flex:1;min-width:0;min-height:46px;border:1px solid #B9CDB0;border-radius:999px;padding:0 16px;font:inherit;font-size:16px;color:#1C2B20;background:#fff}
+.chat-f button{flex:none;min-height:46px;padding:0 18px;border-radius:999px;border:0;background:#0E7A35;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+@media (max-width:760px){.chat-fab{bottom:84px;right:12px;height:50px;padding:0 16px}.chat{right:12px;bottom:142px;height:min(520px,calc(100vh - 200px))}}
 </style>
 </head>
 <body>
@@ -668,7 +702,26 @@ body:not(.xmas) .sky-toggle{bottom:16px}
 
 <div class="rel"><div class="wrap"><h2>관련 기관</h2><div class="rel-list" id="rel-list"></div></div></div>
 
-<footer><div class="wrap"><strong>광양교육사랑</strong><span id="c-address"></span> · 전화 <span id="c-phone"></span> · 이메일 <span id="c-email"></span><a href="admin.html" style="display:inline-flex;align-items:center;min-height:44px;padding:0 20px;margin-left:16px;border-radius:999px;border:1px solid currentColor;color:#fff;font-size:15px;font-weight:700">글·사진 올리기</a></div></footer>
+<footer><div class="wrap ft">
+  <div class="ft-a"><strong>광양교육사랑</strong><p>광양의 학부모와 시민이 함께 아이들의 배움과 성장을 응원합니다.</p></div>
+  <dl class="ft-b">
+    <div><dt>주소</dt><dd id="c-address"></dd></div>
+    <div><dt>전화</dt><dd id="c-phone"></dd></div>
+    <div><dt>담당자</dt><dd id="c-manager"></dd></div>
+    <div><dt>이메일</dt><dd id="c-email"></dd></div>
+  </dl>
+  <div class="ft-c"><button type="button" class="ft-btn fill" data-chat>💬 문의하기</button><a class="ft-btn" href="admin.html">글·사진 올리기</a></div>
+</div></footer>
+
+<!-- 문의 도우미: 자주 묻는 것을 눌러서 답을 본다. 사람이 답하는 것이 아니라, 홈페이지에 적힌 내용을 찾아 보여 준다. -->
+<button type="button" class="chat-fab" id="chat-fab" data-chat aria-label="문의 도우미 열기">💬<span>문의</span></button>
+<div class="chat" id="chat" hidden role="dialog" aria-labelledby="chat-title">
+  <div class="chat-h"><b id="chat-title">교육사랑 도우미</b><small>자주 묻는 것을 알려 드립니다</small><button type="button" id="chat-x" aria-label="문의 창 닫기">×</button></div>
+  <div class="chat-log" id="chat-log" aria-live="polite"></div>
+  <div class="chat-chips" id="chat-chips"></div>
+  <form class="chat-f" id="chat-f"><label for="chat-in" class="sr">궁금한 것 쓰기</label><input id="chat-in" type="text" placeholder="궁금한 것을 써 보세요" autocomplete="off" maxlength="80"><button type="submit">보내기</button></form>
+</div>
+
 
 <canvas id="xmas-snow" aria-hidden="true"></canvas>
 <button type="button" class="sky-toggle" id="sky-toggle"></button>
@@ -793,7 +846,7 @@ body:not(.xmas) .sky-toggle{bottom:16px}
   /* ===== 관리자 페이지(admin.html)에서 바꾸는 내용 =====
      아래 C는 기본값이다. data/content.json 이 있으면 그 내용으로 덮어쓴다. */
   var C={
-    info:{greeting:'',address:'',phone:'',email:'',fee:'',officePhone:'',sponsorUse:'',sponsorAccount:'',joinFormUrl:'',sheetUrl:''},
+    info:{greeting:'',address:'',phone:'',email:'',manager:'',kakaoUrl:'',fee:'',officePhone:'',sponsorUse:'',sponsorAccount:'',joinFormUrl:'',sheetUrl:''},
     current:{gen:'제8대',year:'2025년',president:'정형기',since:'2024년 12월 27일 취임',photo:'img/president.jpg',advisers:'임원재 · 김재숙 · 김종현',
       officers:[{role:'상임부회장',name:'문정은'},{role:'부회장',name:'김태우'},{role:'감사',name:'한재성 · 신은희'},{role:'사무국장',name:'송수정'},{role:'재무국장',name:'하태곤'}]},
     past:[{gen:'초대',name:'서옥란',year:''},{gen:'제2대',name:'',year:''},{gen:'제3대',name:'',year:''},{gen:'제4대',name:'조재인',year:''},{gen:'제5대',name:'',year:''},{gen:'제6대',name:'안영숙',year:'2023년'},{gen:'제7대',name:'전선미',year:'2024년'},{gen:'제8대',name:'정형기',year:'2025년'}],
@@ -811,6 +864,7 @@ body:not(.xmas) .sky-toggle{bottom:16px}
   function el(tag,cls,txt){var n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n;}
   function byId(id){return document.getElementById(id);}
   function fill(id,val,empty){var n=byId(id); if(!n) return; n.textContent=''; if(val) n.appendChild(document.createTextNode(val)); else n.appendChild(el('span','ph',empty));}
+  function linkOr(id,val,href,empty){var n=byId(id); if(!n) return; n.textContent=''; if(!val){n.appendChild(el('span','ph',empty)); return;} if(href){var a=el('a',null,val); a.href=href; n.appendChild(a);} else n.appendChild(document.createTextNode(val));}
   function dot(d){return d?String(d).replace(/-/g,'.'):'';}
   function postHref(n){return '#'+(n.legacy||('post-'+n.id));}
   /* 유튜브 영상 틀. id 는 영문·숫자·-_ 11자만 받는다. */
@@ -825,7 +879,9 @@ body:not(.xmas) .sky-toggle{bottom:16px}
   function drawInfo(){
     var i=C.info;
     fill('c-greeting',i.greeting,'[회장 인사말을 여기에 넣어 주세요]');
-    fill('c-address',i.address,'[주소]'); fill('c-phone',i.phone,'[전화번호]'); fill('c-email',i.email,'[이메일]');
+    fill('c-address',i.address,'[주소]'); fill('c-manager',i.manager,'[담당자 이름]');
+    linkOr('c-phone',i.phone,/^[0-9+][0-9\- ]{6,}$/.test(i.phone||'')?'tel:'+i.phone.replace(/[^0-9+]/g,''):'','[전화번호]');
+    linkOr('c-email',i.email,/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.email||'')?'mailto:'+i.email:'','[이메일]');
     fill('c-fee',i.fee,'[회비 금액 · 납부 방법]'); fill('c-officePhone',i.officePhone||i.phone,'[사무국 전화번호]');
     fill('c-sponsorUse',i.sponsorUse,'[후원금이 쓰이는 곳 안내]'); fill('c-sponsorAccount',i.sponsorAccount,'[은행 · 계좌번호 · 예금주]');
     wire('join-btn','join-note',i.joinFormUrl,'가입 신청서를 준비하고 있습니다.');
@@ -1000,6 +1056,41 @@ body:not(.xmas) .sky-toggle{bottom:16px}
     window.addEventListener('resize',function(){clearTimeout(t); t=setTimeout(drawGallery,200);});
   })();
 
+
+
+  /* ----- 문의 도우미: 낱말을 찾아 홈페이지에 적힌 내용으로 답한다(사람·AI가 답하는 것이 아님). ----- */
+  (function(){
+    var box=byId('chat'), log=byId('chat-log'), started=false;
+    function say(text,who,links){var m=el('div','m '+(who||'bot'),text); (links||[]).forEach(function(l){var a=el('a',null,l[0]); a.href=l[1]; if(/^https?:/.test(l[1])){a.target='_blank'; a.rel='noopener';} m.appendChild(a);}); log.appendChild(m); log.scrollTop=log.scrollHeight;}
+    function v(x,empty){return x||empty;}
+    function contactLinks(){var i=C.info, L=[]; if(/^[0-9+][0-9\- ]{6,}$/.test(i.phone||'')) L.push(['전화 걸기','tel:'+i.phone.replace(/[^0-9+]/g,'')]); if(/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(i.email||'')) L.push(['이메일 쓰기','mailto:'+i.email]); if(/^https:\/\//.test(i.kakaoUrl||'')) L.push(['카카오톡으로 문의',i.kakaoUrl]); return L;}
+    var QA=[
+      ['회원가입 방법',/가입|회원이|입회|신청/,function(){var i=C.info, L=[['참여·후원 화면 열기','#join']]; if(/^https:\/\//.test(i.joinFormUrl||'')) L.unshift(['가입 신청서 쓰기',i.joinFormUrl]);
+        say('광양의 교육을 사랑하는 분이면 누구나 함께할 수 있습니다.\n"참여·후원" 화면에서 가입 신청서를 쓰시면 사무국에서 연락드립니다.'+(i.fee?'\n회비: '+i.fee:''),'bot',L);}],
+      ['회비',/회비|얼마|비용/,function(){say(C.info.fee?'회비 안내입니다.\n'+C.info.fee:'회비 안내는 준비 중입니다. 사무국으로 문의해 주세요.','bot',[['참여·후원 화면 열기','#join']].concat(contactLinks()));}],
+      ['후원하기',/후원|기부|계좌|돕/,function(){var i=C.info; say((i.sponsorUse?i.sponsorUse+'\n':'보내 주신 후원금은 광양 아이들을 위한 사업에 씁니다.\n')+(i.sponsorAccount?'후원 계좌: '+i.sponsorAccount:'후원 계좌 안내는 준비 중입니다. 사무국으로 문의해 주세요.'),'bot',[['참여·후원 화면 열기','#join']]);}],
+      ['행사 일정',/일정|행사|언제|달력|페스티벌|축제/,function(){var t=new Date(), today=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+        var up=C.events.filter(function(e){return e.date>=today;}).sort(function(a,b){return a.date<b.date?-1:1;}).slice(0,3);
+        say(up.length?'다가오는 행사입니다.\n'+up.map(function(e){return '· '+dot(e.date)+' '+e.title+(e.info?' ('+e.info+')':'');}).join('\n'):'지금 등록된 다가오는 행사가 없습니다. 새 일정이 잡히면 달력에 올립니다.','bot',[['달력 보기','#schedule']]);}],
+      ['사진·자료 올리기',/올리|사진|자료|업로드|글쓰/,function(){say('정회원과 임원은 "글·사진 올리기"에서 소식, 사진, 자료, 일정을 올릴 수 있습니다.\n비밀번호는 임원에게 물어봐 주세요. 들어가면 "사용 설명서"가 있습니다.','bot',[['글·사진 올리기','admin.html'],['자료실 보기','#library']]);}],
+      ['주요 사업',/사업|무슨 일|하는 일|활동|보물섬|동요/,function(){say('나눔장터 광양보물섬, 청소년 재능기부 페스티벌, 환경 동요 부르기 대회, 학부모 간담회 등 아이들을 위한 일을 하고 있습니다.','bot',[['주요 사업 보기','#programs'],['소식 보기','#news']]);}],
+      ['연락처·주소',/연락|전화|번호|주소|위치|어디|오시는|메일|담당|문의|카톡|카카오/,function(){var i=C.info; say('주소: '+v(i.address,'준비 중')+'\n전화: '+v(i.phone,'준비 중')+'\n담당자: '+v(i.manager,'준비 중')+'\n이메일: '+v(i.email,'준비 중'),'bot',contactLinks());}]
+    ];
+    function answer(q){
+      for(var k=0;k<QA.length;k++){ if(QA[k][1].test(q)){QA[k][2](); return;} }
+      say('죄송합니다. 그 질문은 제가 답을 찾지 못했습니다.\n아래 단추를 눌러 보시거나, 사무국으로 문의해 주세요.','bot',contactLinks());
+    }
+    function open(){box.hidden=false; byId('chat-fab').hidden=true;
+      if(!started){started=true; say('안녕하세요. 광양교육사랑 도우미입니다.\n아래 단추를 누르거나 궁금한 것을 써 주세요.\n(저는 자주 묻는 것만 답하는 자동 안내입니다.)');
+        QA.forEach(function(x){var b=el('button',null,x[0]); b.type='button'; b.addEventListener('click',function(){say(x[0],'me'); x[2]();}); byId('chat-chips').appendChild(b);});}
+      byId('chat-in').focus();}
+    function close(){box.hidden=true; byId('chat-fab').hidden=false;}
+    document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-chat]'); if(b){e.preventDefault(); open();}});
+    byId('chat-x').addEventListener('click',close);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!box.hidden) close();});
+    byId('chat-f').addEventListener('submit',function(e){e.preventDefault(); var q=byId('chat-in').value.trim(); if(!q) return; byId('chat-in').value=''; say(q,'me'); answer(q);});
+    log.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a'); if(a&&a.getAttribute('href').charAt(0)==='#'&&window.innerWidth<=760) close();});
+  })();
 
   /* ----- 새 모습(look2): 첫 화면 큰 사진, 소식 탭 ----- */
   var h2Timer=null, h2Pos=0, h2Hold=false;
