@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>광양교육사랑 올리기·관리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<style>
+/* 관리자 페이지: 비밀번호로 들어와 글·사진·자료를 올리면 저장소에 바로 저장되고, 1~2분 뒤 홈페이지에 나온다. */
+:root{--green:#0E7A35;--deep:#0B4F26;--tint:#EEF6E6;--gold:#E9CF8B;--ink:#1C2B20;--sub:#4C5B50;--line:#DDE7D5;--red:#B3262E;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans KR',system-ui,'Malgun Gothic',sans-serif;color:var(--ink);background:#F4F8F0;line-height:1.6;font-size:17px}
+a{color:var(--green)}
+h1,h2,h3{margin:0;line-height:1.3;letter-spacing:-.02em}
+.top{background:var(--deep);color:#fff}
+.top .in{max-width:920px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.top a{color:#fff;font-weight:700}
+.wrap{max-width:920px;margin:0 auto;padding:24px 20px 80px}
+.card{background:#fff;border-radius:22px;box-shadow:0 6px 24px rgba(28,43,32,.08);padding:26px;margin-top:20px}
+.card h2{font-size:22px;font-weight:800;margin-bottom:6px}
+.card p.d{color:var(--sub);font-size:15px;margin:0 0 16px}
+label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+input[type=text],input[type=password],input[type=date],input[type=url],select,textarea{width:100%;min-height:48px;border:1px solid #B9CDB0;border-radius:12px;padding:10px 14px;font:inherit;background:#fff;color:var(--ink)}
+textarea{min-height:130px;resize:vertical}
+input[type=file]{width:100%;font:inherit;padding:10px;border:1px dashed #9DBF8F;border-radius:12px;background:#FAFCF7}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.hint{font-size:14px;color:var(--sub);margin-top:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 26px;border-radius:999px;border:0;background:var(--green);color:#fff;font:inherit;font-weight:700;cursor:pointer;margin-top:18px}
+.btn[disabled]{opacity:.5;cursor:default}
+.btn.sub{background:var(--tint);color:var(--deep)}
+.btn.del{background:#fff;color:var(--red);border:1px solid #E3B6B9;min-height:40px;padding:0 16px;margin:0;font-size:15px}
+.msg{margin-top:14px;font-weight:700;min-height:1.6em}
+.msg.ok{color:var(--green)} .msg.bad{color:var(--red)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.tabs button{min-height:46px;padding:0 18px;border-radius:999px;border:1px solid #B9CDB0;background:#fff;font:inherit;font-weight:700;color:var(--ink);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--green);border-color:var(--green);color:#fff}
+.tabs .sep{flex-basis:100%;height:0}
+.tabs small{align-self:center;color:var(--sub);font-weight:700;margin-right:4px}
+.pane{display:none}.pane.on{display:block}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 16px}
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item .t{flex:1;min-width:0}
+.item .t b{display:block;overflow-wrap:anywhere}
+.item .t small{color:var(--sub)}
+.badge{display:inline-block;padding:3px 12px;border-radius:999px;background:var(--gold);font-size:13px;font-weight:700}
+.slot{border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:14px}
+.slot img{max-width:100%;max-height:90px;border-radius:8px;display:block;margin-bottom:8px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="top"><div class="in"><strong>광양교육사랑 올리기·관리</strong><span><span id="who"></span> <a href="./">홈페이지로 가기</a></span></div></div>
+<div class="wrap">
+
+  <!-- 들어가기 -->
+  <div class="card" id="p-login">
+    <h2>들어가기</h2>
+    <p class="d">정회원 비밀번호나 임원 비밀번호를 넣어 주세요. 정회원은 글·사진·자료·일정을 올릴 수 있고, 임원은 고치고 지우는 것까지 할 수 있습니다.</p>
+    <form id="f-login">
+      <label for="pw">비밀번호</label>
+      <input type="password" id="pw" autocomplete="current-password" required>
+      <button class="btn" type="submit">들어가기</button>
+      <p class="msg" id="m-login" role="status"></p>
+    </form>
+    <p class="hint"><a href="#" id="go-setup">처음 설정 · 열쇠 바꾸기 (대표 관리자용)</a></p>
+  </div>
+
+  <!-- 처음 설정 -->
+  <div class="card" id="p-setup" hidden>
+    <h2>처음 설정 · 열쇠 바꾸기</h2>
+    <p class="d">대표 관리자가 한 번만 합니다. GitHub에서 만든 열쇠(토큰)를 비밀번호로 잠가서 저장합니다. 열쇠는 이 화면에서 바로 잠기고, 잠긴 모습으로만 저장됩니다.</p>
+    <form id="f-setup">
+      <label for="su-token">GitHub 열쇠 (github_pat_ 로 시작)</label>
+      <input type="password" id="su-token" autocomplete="off" required>
+      <div class="row2">
+        <div><label for="su-m">정회원 비밀번호 (8자 이상)</label><input type="text" id="su-m" autocomplete="off" required minlength="8"></div>
+        <div><label for="su-o">임원 비밀번호 (8자 이상)</label><input type="text" id="su-o" autocomplete="off" required minlength="8"></div>
+      </div>
+      <p class="hint">두 비밀번호는 서로 다르게 정합니다. 길고 남이 짐작하기 어려운 것으로 해 주세요.</p>
+      <button class="btn" type="submit">열쇠 저장하기</button> <button class="btn sub" type="button" id="su-back">돌아가기</button>
+      <p class="msg" id="m-setup" role="status"></p>
+    </form>
+  </div>
+
+  <!-- 일하는 화면 -->
+  <div id="p-work" hidden>
+    <div class="tabs" role="tablist" id="tabs"></div>
+
+    <div class="pane card" id="t-post">
+      <h2>소식·사진 올리기</h2><p class="d">행사 사진이나 알리는 글을 올립니다. 올리면 "소식"에 나옵니다.</p>
+      <form id="f-post">
+        <div class="row2">
+          <div><label for="po-cat">분류</label><select id="po-cat"><option>활동</option><option>행사</option><option>공지</option></select></div>
+          <div><label for="po-date">날짜</label><input type="date" id="po-date" required></div>
+        </div>
+        <label for="po-title">제목</label><input type="text" id="po-title" required maxlength="80">
+        <label for="po-body">내용</label><textarea id="po-body"></textarea>
+        <label for="po-img">사진 (한 장, 없어도 됩니다)</label><input type="file" id="po-img" accept="image/*">
+        <p class="hint">큰 사진은 알맞은 크기로 줄여서 올립니다. 아이 얼굴이 나온 사진은 보호자 동의를 받은 것만 올려 주세요.</p>
+        <button class="btn" type="submit">올리기</button><p class="msg" role="status"></p>
+      </form>
+    </div>
+
+    <div class="pane card" id="t-file">
+      <h2>자료 올리기</h2><p class="d">문서, 사진, 짧은 영상·음원을 자료실에 올립니다.</p>
+      <form id="f-file">
+        <label for="fi-cat">분류</label><select id="fi-cat"><option>행사자료</option><option>사진</option><option>영상·음원</option><option>서식</option></select>
+        <label for="fi-title">제목</label><input type="text" id="fi-title" required maxlength="80">
+        <label for="fi-file">파일 (25MB 까지)</label><input type="file" id="fi-file" required>
+        <p class="hint">회원의 주민번호·집 주소·전화번호가 적힌 파일은 올리지 마세요. 자료실은 누구나 볼 수 있습니다.</p>
+        <button class="btn" type="submit">올리기</button><p class="msg" role="status"></p>
+      </form>
+    </div>
+
+    <div class="pane card" id="t-event">
+      <h2>행사 일정 넣기</h2><p class="d">달력에 일정을 넣습니다.</p>
+      <form id="f-event">
+        <label for="ev-date">날짜</label><input type="date" id="ev-date" required>
+        <label for="ev-title">행사 이름</label><input type="text" id="ev-title" required maxlength="80">
+        <label for="ev-info">시간·장소</label><input type="text" id="ev-info" placeholder="예: 14:00 · 광양문화예술회관" maxlength="80">
+        <button class="btn" type="submit">넣기</button><p class="msg" role="status"></p>
+      </form>
+    </div>
+
+    <div class="pane card" id="t-list">
+      <h2>올린 것 보기·지우기</h2><p class="d">잘못 올린 것을 지웁니다. 지우면 홈페이지에서 사라집니다.</p>
+      <h3 style="margin-top:10px">소식</h3><div id="l-news"></div>
+      <h3 style="margin-top:22px">자료실</h3><div id="l-files"></div>
+      <h3 style="margin-top:22px">행사 일정</h3><div id="l-events"></div>
+      <p class="msg" id="m-list" role="status"></p>
+    </div>
+
+    <div class="pane card" id="t-banner">
+      <h2>배너</h2><p class="d">회원 업체 배너 4자리(가로 600×세로 200)와 광고 배너 1자리(가로 1200×세로 200)입니다.</p>
+      <div id="bn-slots"></div><p class="msg" id="m-banner" role="status"></p>
+    </div>
+
+    <div class="pane card" id="t-info">
+      <h2>기본 정보</h2><p class="d">홈페이지의 노란 빈칸에 들어갈 내용입니다. 비워 두면 빈칸으로 보입니다.</p>
+      <form id="f-info">
+        <label for="in-greeting">회장 인사말</label><textarea id="in-greeting"></textarea>
+        <div class="row2">
+          <div><label for="in-address">주소</label><input type="text" id="in-address"></div>
+          <div><label for="in-phone">전화</label><input type="text" id="in-phone"></div>
+          <div><label for="in-email">이메일</label><input type="text" id="in-email"></div>
+          <div><label for="in-officePhone">사무국 전화 (가입 문의)</label><input type="text" id="in-officePhone"></div>
+        </div>
+        <label for="in-fee">회비 금액 · 내는 방법</label><input type="text" id="in-fee">
+        <label for="in-sponsorUse">후원금이 쓰이는 곳</label><textarea id="in-sponsorUse" style="min-height:80px"></textarea>
+        <label for="in-sponsorAccount">후원 계좌 (은행 · 계좌번호 · 예금주)</label><input type="text" id="in-sponsorAccount">
+        <label for="in-joinFormUrl">회원가입 신청서 주소 (구글 설문, https:// 로 시작)</label><input type="url" id="in-joinFormUrl">
+        <label for="in-sheetUrl">가입 신청 명단 주소 (구글 시트)</label><input type="url" id="in-sheetUrl">
+        <button class="btn" type="submit">저장하기</button><p class="msg" role="status"></p>
+      </form>
+    </div>
+
+    <div class="pane card" id="t-pres">
+      <h2>회장단</h2><p class="d">지금 회장단과 역대 회장 명단입니다.</p>
+      <form id="f-pres">
+        <div class="row2">
+          <div><label for="pr-gen">대수</label><input type="text" id="pr-gen" placeholder="제8대"></div>
+          <div><label for="pr-year">연도</label><input type="text" id="pr-year" placeholder="2025년"></div>
+          <div><label for="pr-president">회장 이름</label><input type="text" id="pr-president"></div>
+          <div><label for="pr-since">취임일</label><input type="text" id="pr-since" placeholder="2024년 12월 27일 취임"></div>
+        </div>
+        <label for="pr-photo">회장 사진 바꾸기 (안 고르면 그대로)</label><input type="file" id="pr-photo" accept="image/*">
+        <label for="pr-officers">임원 (한 줄에 한 명. "직책, 이름")</label><textarea id="pr-officers"></textarea>
+        <label for="pr-advisers">자문위원</label><input type="text" id="pr-advisers">
+        <label for="pr-past">역대 회장 (한 줄에 한 명. "대수, 이름, 연도". 이름을 모르면 비워 둡니다)</label><textarea id="pr-past" style="min-height:220px"></textarea>
+        <button class="btn" type="submit">저장하기</button><p class="msg" role="status"></p>
+      </form>
+    </div>
+
+    <div class="pane card" id="t-roster">
+      <h2>회원 명부 · 임원 자료 · 비밀번호</h2><p class="d">명부와 임원 전용 자료를 새로 잠가서 올립니다. 여기서 정한 비밀번호가 새 정회원·임원 비밀번호가 됩니다. 전에 올린 명부와 임원 자료는 새것으로 바뀝니다.</p>
+      <form id="f-roster">
+        <label for="ro-roster">회원 명부 엑셀 (.xlsx)</label><input type="file" id="ro-roster" accept=".xlsx" required>
+        <p class="hint">첫 줄은 "이름, 직책, 업체, 연락처" 같은 제목으로 둡니다. 생년월일과 집 주소는 빼 주세요.</p>
+        <label for="ro-files">임원 전용 자료 (여러 개 가능)</label><input type="file" id="ro-files" multiple>
+        <div class="row2">
+          <div><label for="ro-m">새 정회원 비밀번호 (8자 이상)</label><input type="text" id="ro-m" autocomplete="off" required minlength="8"></div>
+          <div><label for="ro-o">새 임원 비밀번호 (8자 이상)</label><input type="text" id="ro-o" autocomplete="off" required minlength="8"></div>
+        </div>
+        <button class="btn" type="submit">잠가서 올리기</button><p class="msg" role="status"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="jszip.min.js"></script>
+<script src="forms.js"></script>
+<script src="secure.js"></script>
+<script>
+(function(){
+  'use strict';
+  var REPO='rkrmtmdanffb/gyedu', BRANCH='main', API='https://api.github.com/repos/'+REPO, ITER=250000, MAX_FILE=25*1024*1024;
+  var token='', role='', C=null, te=new TextEncoder(), td=new TextDecoder();
+  function $(id){return document.getElementById(id);}
+  function el(tag,cls,txt){var n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n;}
+  function say(n,t,kind){n.className='msg'+(kind?' '+kind:''); n.textContent=t;}
+  function today(){var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+
+  /* ---------- 암호 ---------- */
+  function b64(buf){var u=new Uint8Array(buf), s='', i; for(i=0;i<u.length;i+=0x8000) s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000)); return btoa(s);}
+  function unb64(s){var b=atob(s), u=new Uint8Array(b.length), i; for(i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u;}
+  function kdf(pw,salt){return crypto.subtle.importKey('raw',te.encode(pw),'PBKDF2',false,['deriveKey']).then(function(k){
+    return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:ITER,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);});}
+  function lock(pw,text){var salt=crypto.getRandomValues(new Uint8Array(16)), iv=crypto.getRandomValues(new Uint8Array(12));
+    return kdf(pw,salt).then(function(k){return crypto.subtle.encrypt({name:'AES-GCM',iv:iv},k,te.encode(text));}).then(function(ct){return {salt:b64(salt),iv:b64(iv),ct:b64(ct)};});}
+  function unlock(pw,box){return kdf(pw,unb64(box.salt)).then(function(k){return crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(box.iv)},k,unb64(box.ct));}).then(function(pt){return td.decode(pt);});}
+  function makeKeyFile(tok,mpw,opw){return Promise.all([lock(mpw,tok),lock(opw,tok)]).then(function(b){return JSON.stringify({v:1,iter:ITER,m:b[0],o:b[1]});});}
+
+  /* ---------- GitHub ---------- */
+  function gh(method,path,body,tok){
+    return fetch(API+path,{method:method,cache:'no-store',headers:{'Authorization':'Bearer '+(tok||token),'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},body:body?JSON.stringify(body):undefined})
+      .then(function(r){ if(!r.ok){var e=new Error('GitHub '+r.status); e.status=r.status; throw e;} return r.status===204?null:r.json(); });
+  }
+  function readJson(path){return gh('GET','/contents/'+path+'?ref='+BRANCH).then(function(f){return JSON.parse(td.decode(unb64(f.content.replace(/\s/g,''))));});}
+  /* changes: [{path, b64}] 올리거나 바꿈, [{path, del:true}] 지움. 한 번의 저장(커밋)으로 묶는다. */
+  function commit(changes,message,tok){
+    var head, base;
+    return gh('GET','/git/ref/heads/'+BRANCH,null,tok).then(function(r){head=r.object.sha; return gh('GET','/git/commits/'+head,null,tok);}).then(function(c){
+      base=c.tree.sha; var chain=Promise.resolve(), tree=[];
+      changes.forEach(function(ch){
+        if(ch.del){tree.push({path:ch.path,mode:'100644',type:'blob',sha:null}); return;}
+        chain=chain.then(function(){return gh('POST','/git/blobs',{content:ch.b64,encoding:'base64'},tok);}).then(function(b){tree.push({path:ch.path,mode:'100644',type:'blob',sha:b.sha});});
+      });
+      return chain.then(function(){return gh('POST','/git/trees',{base_tree:base,tree:tree},tok);});
+    }).then(function(t){return gh('POST','/git/commits',{message:message,tree:t.sha,parents:[head]},tok);
+    }).then(function(c){return gh('PATCH','/git/refs/heads/'+BRANCH,{sha:c.sha},tok);});
+  }
+  function textB64(s){return b64(te.encode(s));}
+  /* 최신 내용을 다시 읽어 와서 고친 뒤 저장한다(다른 사람이 방금 올린 것을 덮어쓰지 않도록). */
+  function save(mutate,message,extra){
+    return readJson('data/content.json').then(function(latest){
+      var more=mutate(latest)||[]; C=latest;
+      return commit((extra||[]).concat(more).concat([{path:'data/content.json',b64:textB64(JSON.stringify(latest,null,1))}]),message);
+    }).then(function(){drawAll();});
+  }
+  function why(e){
+    if(e&&e.status===401) return '열쇠가 맞지 않거나 기한이 지났습니다. 대표 관리자에게 알려 주세요.';
+    if(e&&(e.status===403||e.status===404)) return '열쇠에 올리기 권한이 없습니다. 대표 관리자에게 알려 주세요.';
+    if(e&&(e.status===409||e.status===422)) return '다른 사람이 방금 올려서 겹쳤습니다. 한 번 더 눌러 주세요.';
+    return '올리지 못했습니다. 인터넷 연결을 확인하고 다시 해 주세요.';
+  }
+
+  /* ---------- 파일 ---------- */
+  function fileB64(file){return file.arrayBuffer().then(b64);}
+  function ext(name){var m=/\.([A-Za-z0-9]{1,5})$/.exec(name||''); return m?m[1].toLowerCase():'bin';}
+  function newPath(e){var d=new Date(); return 'uploads/'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+'/'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)+'.'+e;}
+  /* 사진은 긴 쪽 1600px 로 줄여 JPEG 로 만든다. GIF 는 그대로 둔다. */
+  function photo(file,max){
+    if(/gif$/i.test(file.type)) return fileB64(file).then(function(b){return {b64:b,ext:'gif'};});
+    return new Promise(function(res,rej){var url=URL.createObjectURL(file), im=new Image();
+      im.onload=function(){var w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,(max||1600)/Math.max(w,h)), cv=document.createElement('canvas');
+        cv.width=Math.round(w*k); cv.height=Math.round(h*k); var x=cv.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,cv.width,cv.height); x.drawImage(im,0,0,cv.width,cv.height);
+        URL.revokeObjectURL(url); res({b64:cv.toDataURL('image/jpeg',.86).split(',')[1],ext:'jpg'});};
+      im.onerror=function(){URL.revokeObjectURL(url); rej(new Error('img'));}; im.src=url;});
+  }
+
+  /* ---------- 화면 ---------- */
+  var TABS=[['post','소식·사진 올리기','m'],['file','자료 올리기','m'],['event','일정 넣기','m'],['list','보기·지우기','o'],['banner','배너','o'],['info','기본 정보','o'],['pres','회장단','o'],['roster','명부·비밀번호','o']];
+  function showTab(id){TABS.forEach(function(t){$('t-'+t[0]).classList.toggle('on',t[0]===id); var b=$('tab-'+t[0]); if(b) b.setAttribute('aria-selected',t[0]===id?'true':'false');});}
+  function enter(){
+    $('p-login').hidden=true; $('p-setup').hidden=true; $('p-work').hidden=false;
+    $('who').textContent=role==='o'?'임원으로 들어옴 ·':'정회원으로 들어옴 ·';
+    var box=$('tabs'); box.textContent=''; var sep=false;
+    TABS.forEach(function(t){ if(t[2]==='o'&&role!=='o') return;
+      if(t[2]==='o'&&!sep){sep=true; box.appendChild(el('span','sep')); box.appendChild(el('small',null,'임원용'));}
+      var b=el('button',null,t[1]); b.type='button'; b.id='tab-'+t[0]; b.setAttribute('role','tab'); b.addEventListener('click',function(){showTab(t[0]);}); box.appendChild(b);});
+    $('po-date').value=today(); $('ev-date').value=today();
+    drawAll(); showTab('post');
+  }
+  function busy(form,on){Array.prototype.forEach.call(form.querySelectorAll('button'),function(b){b.disabled=on;});}
+  function run(form,work,okText){
+    var m=form.querySelector('.msg'); busy(form,true); say(m,'올리는 중입니다. 창을 닫지 말고 기다려 주세요…');
+    return Promise.resolve().then(work).then(function(r){ if(r===false) return; say(m,okText||'올렸습니다. 1~2분 뒤 홈페이지에 나옵니다.','ok'); },
+      function(e){say(m,e&&e.user?e.message:why(e),'bad');}).then(function(){busy(form,false);});
+  }
+  function userErr(t){var e=new Error(t); e.user=true; return e;}
+
+  function drawAll(){ if(!C||role!=='o') return; drawLists(); drawBanners(); fillInfo(); fillPres(); }
+  function delBtn(label,fn){var b=el('button','btn del','지우기'); b.type='button'; b.setAttribute('aria-label',label+' 지우기');
+    b.addEventListener('click',function(){ if(!window.confirm('"'+label+'"\n정말 지울까요?')) return; var m=$('m-list'); b.disabled=true; say(m,'지우는 중입니다…');
+      fn().then(function(){say(m,'지웠습니다. 1~2분 뒤 홈페이지에서 사라집니다.','ok');},function(e){b.disabled=false; say(m,why(e),'bad');});}); return b;}
+  function row(box,badge,title,sub,btn){var r=el('div','item'); r.appendChild(el('span','badge',badge)); var t=el('div','t'); t.appendChild(el('b',null,title)); t.appendChild(el('small',null,sub)); r.appendChild(t); r.appendChild(btn); box.appendChild(r);}
+  function mine(p){return typeof p==='string'&&p.indexOf('uploads/')===0;}
+  function drawLists(){
+    var n=$('l-news'), f=$('l-files'), e=$('l-events'); n.textContent=''; f.textContent=''; e.textContent='';
+    C.news.forEach(function(x){row(n,x.cat||'소식',x.title,x.date,delBtn(x.title,function(){
+      return save(function(c){c.news=c.news.filter(function(y){return y.id!==x.id;}); c.events.forEach(function(v){if(v.post===x.id) delete v.post;}); return mine(x.img)?[{path:x.img,del:true}]:[];},'소식 지움: '+x.title);}));});
+    C.files.forEach(function(x){var p=x.link||x.video||x.audio||''; row(f,x.k,x.t,[x.e,x.d].filter(Boolean).join(' · '),delBtn(x.t,function(){
+      return save(function(c){c.files=c.files.filter(function(y){return !(y.t===x.t&&(y.link||y.video||y.audio||'')===p);}); return mine(p)?[{path:p,del:true}]:[];},'자료 지움: '+x.t);}));});
+    C.events.forEach(function(x){row(e,'일정',x.title,[x.date,x.info].filter(Boolean).join(' · '),delBtn(x.title,function(){
+      return save(function(c){c.events=c.events.filter(function(y){return !(y.date===x.date&&y.title===x.title);});},'일정 지움: '+x.title);}));});
+    [n,f,e].forEach(function(b){if(!b.childNodes.length) b.appendChild(el('p','hint','아직 없습니다.'));});
+  }
+  function drawBanners(){
+    var box=$('bn-slots'); box.textContent='';
+    var slots=C.banners.members.map(function(b,i){return {b:b,name:'회원 업체 배너 '+(i+1),set:function(c,v){c.banners.members[i]=v;}};});
+    slots.push({b:C.banners.ad||{},name:'광고 배너',set:function(c,v){c.banners.ad=v;}});
+    slots.forEach(function(s,i){
+      var f=el('form','slot'); f.appendChild(el('h3',null,s.name));
+      if(s.b.img){var im=el('img'); im.src=s.b.img+'?t='+Date.now(); im.alt=s.name+' 지금 그림'; f.appendChild(im);}
+      function field(lbl,type,val,id){var l=el('label',null,lbl); l.htmlFor=id; var inp=el('input'); inp.type=type; inp.id=id; if(type!=='file') inp.value=val||''; else inp.accept='image/*'; f.appendChild(l); f.appendChild(inp); return inp;}
+      var fi=field('배너 그림'+(s.b.img?' 바꾸기 (안 고르면 그대로)':''),'file','','bn-f'+i), nm=field('업체 이름','text',s.b.name,'bn-n'+i), lk=field('누르면 열릴 주소 (https://)','text',s.b.link,'bn-l'+i);
+      var ok=el('button','btn','저장하기'); ok.type='submit'; f.appendChild(ok);
+      if(s.b.img){var rm=el('button','btn del','배너 빼기'); rm.type='button'; rm.style.marginLeft='10px'; f.appendChild(rm);
+        rm.addEventListener('click',function(){ if(!window.confirm(s.name+'를 뺄까요?')) return; run(f,function(){return save(function(c){s.set(c,{img:'',name:'',link:''}); return mine(s.b.img)?[{path:s.b.img,del:true}]:[];},s.name+' 뺌');},'뺐습니다.');});}
+      f.appendChild(el('p','msg'));
+      f.addEventListener('submit',function(ev){ev.preventDefault(); run(f,function(){
+        var file=fi.files[0], link=lk.value.trim();
+        if(!file&&!s.b.img) throw userErr('배너 그림을 골라 주세요.');
+        if(link&&!/^https?:\/\//.test(link)) throw userErr('주소는 https:// 로 시작해야 합니다.');
+        var up=file?photo(file,1600).then(function(p){var path=newPath(p.ext); return {path:path,b64:p.b64};}):Promise.resolve(null);
+        return up.then(function(u){return save(function(c){s.set(c,{img:u?u.path:s.b.img,name:nm.value.trim(),link:link}); return (u&&mine(s.b.img))?[{path:s.b.img,del:true}]:[];},s.name+' 바꿈',u?[u]:[]);});
+      },'저장했습니다. 1~2분 뒤 홈페이지에 나옵니다.');});
+      box.appendChild(f);
+    });
+  }
+  var INFO=['greeting','address','phone','email','officePhone','fee','sponsorUse','sponsorAccount','joinFormUrl','sheetUrl'];
+  function fillInfo(){INFO.forEach(function(k){$('in-'+k).value=C.info[k]||'';});}
+  function fillPres(){var c=C.current; ['gen','year','president','since','advisers'].forEach(function(k){$('pr-'+k).value=c[k]||'';});
+    $('pr-officers').value=(c.officers||[]).map(function(o){return o.role+', '+o.name;}).join('\n');
+    $('pr-past').value=C.past.map(function(p){return [p.gen,p.name,p.year].join(', ').replace(/(, )+$/,'');}).join('\n');}
+  function lines(v){return v.split('\n').map(function(s){return s.trim();}).filter(Boolean);}
+
+  /* ---------- 폼 ---------- */
+  $('f-post').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
+    var file=$('po-img').files[0], id='n'+Date.now().toString(36), title=$('po-title').value.trim();
+    if(!title) throw userErr('제목을 써 주세요.');
+    var up=file?photo(file,1600).then(function(p){return {path:newPath(p.ext),b64:p.b64};},function(){throw userErr('사진을 읽지 못했습니다. JPG나 PNG 사진으로 해 주세요.');}):Promise.resolve(null);
+    return up.then(function(u){return save(function(c){c.news.push({id:id,cat:$('po-cat').value,title:title,date:$('po-date').value,body:$('po-body').value.trim(),img:u?u.path:''});},'소식 올림: '+title,u?[u]:[]);})
+      .then(function(){f.reset(); $('po-date').value=today();});
+  });});
+  $('f-file').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
+    var file=$('fi-file').files[0], title=$('fi-title').value.trim(), e=ext(file.name);
+    if(file.size>MAX_FILE) throw userErr('파일이 25MB보다 큽니다. 큰 영상은 유튜브에 올리고 주소를 소식 글에 적어 주세요.');
+    if(/^(exe|bat|cmd|js|html?|php|msi|scr|vbs)$/.test(e)) throw userErr('이 종류의 파일은 올릴 수 없습니다.');
+    var path=newPath(e), item={k:$('fi-cat').value,t:title,e:e.toUpperCase(),d:today().replace(/-/g,'.')};
+    if(/^(mp4|webm|mov)$/.test(e)) item.video=path; else if(/^(mp3|m4a|wav|ogg)$/.test(e)) item.audio=path; else item.link=path;
+    return fileB64(file).then(function(b){return save(function(c){c.files.unshift(item);},'자료 올림: '+title,[{path:path,b64:b}]);}).then(function(){f.reset();});
+  });});
+  $('f-event').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
+    var title=$('ev-title').value.trim(), date=$('ev-date').value, info=$('ev-info').value.trim();
+    return save(function(c){c.events.push({date:date,title:title,info:info});},'일정 넣음: '+title).then(function(){f.reset(); $('ev-date').value=today();});
+  },'넣었습니다. 1~2분 뒤 달력에 나옵니다.');});
+  $('f-info').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
+    var v={}; INFO.forEach(function(k){v[k]=$('in-'+k).value.trim();});
+    if((v.joinFormUrl&&!/^https:\/\//.test(v.joinFormUrl))||(v.sheetUrl&&!/^https:\/\//.test(v.sheetUrl))) throw userErr('주소는 https:// 로 시작해야 합니다.');
+    return save(function(c){INFO.forEach(function(k){c.info[k]=v[k];});},'기본 정보 바꿈');
+  },'저장했습니다. 1~2분 뒤 홈페이지에 나옵니다.');});
+  $('f-pres').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
+    var file=$('pr-photo').files[0];
+    var officers=lines($('pr-officers').value).map(function(l){var i=l.indexOf(','); return i<0?{role:l,name:''}:{role:l.slice(0,i).trim(),name:l.slice(i+1).trim()};});
+    var past=lines($('pr-past').value).map(function(l){var a=l.split(',').map(function(s){return s.trim();}); return {gen:a[0]||'',name:a[1]||'',year:a[2]||''};});
+    var up=file?photo(file,800).then(function(p){return {path:newPath(p.ext),b64:p.b64};}):Promise.resolve(null);
+    return up.then(function(u){return save(function(c){var old=c.current.photo;
+      ['gen','year','president','since','advisers'].forEach(function(k){c.current[k]=$('pr-'+k).value.trim();});
+      c.current.officers=officers; c.past=past; if(u) c.current.photo=u.path; return (u&&mine(old))?[{path:old,del:true}]:[];},'회장단 바꿈',u?[u]:[]);}).then(function(){$('pr-photo').value='';});
+  },'저장했습니다. 1~2분 뒤 홈페이지에 나옵니다.');});
+  $('f-roster').addEventListener('submit',function(ev){ev.preventDefault(); var f=this; run(f,function(){
+    var rf=$('ro-roster').files[0], fs=Array.prototype.slice.call($('ro-files').files), mpw=$('ro-m').value, opw=$('ro-o').value;
+    if(mpw.length<8||opw.length<8) throw userErr('비밀번호는 각각 8자 이상으로 정해 주세요.');
+    if(mpw===opw) throw userErr('정회원 비밀번호와 임원 비밀번호는 서로 다르게 정해 주세요.');
+    if(fs.some(function(x){return x.size>MAX_FILE;})) throw userErr('25MB보다 큰 파일이 있습니다.');
+    var changes=[];
+    return window.GyeduSecure.readRoster(rf).then(function(r){return window.GyeduSecure.build(r,fs,mpw,opw);},function(){throw userErr('명부를 읽지 못했습니다. 첫 줄에 제목이 있는 .xlsx 파일인지 확인해 주세요.');})
+      .then(function(blob){return JSZip.loadAsync(blob);}).then(function(zip){
+        var names=Object.keys(zip.files).filter(function(n){return !zip.files[n].dir;});
+        return Promise.all(names.map(function(n){return zip.files[n].async('base64').then(function(b){changes.push({path:n,b64:b});});})).then(function(){return names;});
+      }).then(function(names){
+        return gh('GET','/contents/secure?ref='+BRANCH).then(function(list){list.forEach(function(x){if(names.indexOf(x.path)<0) changes.push({path:x.path,del:true});});},function(){});
+      }).then(function(){return makeKeyFile(token,mpw,opw);}).then(function(key){
+        changes.push({path:'data/key.json',b64:textB64(key)}); return commit(changes,'명부·임원 자료·비밀번호 바꿈');
+      }).then(function(){f.reset();});
+  },'올렸습니다. 지금부터 새 비밀번호를 씁니다. 회원들에게 새 비밀번호를 알려 주세요.');});
+
+  /* ---------- 들어가기 · 처음 설정 ---------- */
+  $('f-login').addEventListener('submit',function(ev){ev.preventDefault(); var m=$('m-login'), pw=$('pw').value, f=this; busy(f,true); say(m,'확인하는 중입니다…');
+    fetch('data/key.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok) throw userErr('아직 처음 설정이 안 됐습니다. 대표 관리자가 아래 "처음 설정"을 먼저 해야 합니다.'); return r.json();})
+      .then(function(k){ITER=k.iter||ITER; return unlock(pw,k.o).then(function(t){role='o'; return t;},function(){return unlock(pw,k.m).then(function(t){role='m'; return t;},function(){throw userErr('비밀번호가 맞지 않습니다.');});});})
+      .then(function(t){token=t; return readJson('data/content.json');})
+      .then(function(c){C=c; $('pw').value=''; enter();},function(e){token=''; role=''; say(m,e&&e.user?e.message:why(e),'bad');}).then(function(){busy(f,false);});
+  });
+  $('go-setup').addEventListener('click',function(ev){ev.preventDefault(); $('p-login').hidden=true; $('p-setup').hidden=false;});
+  $('su-back').addEventListener('click',function(){$('p-setup').hidden=true; $('p-login').hidden=false;});
+  $('f-setup').addEventListener('submit',function(ev){ev.preventDefault(); var f=this, m=$('m-setup'), tok=$('su-token').value.trim(), mpw=$('su-m').value, opw=$('su-o').value;
+    if(mpw.length<8||opw.length<8) return say(m,'비밀번호는 각각 8자 이상으로 정해 주세요.','bad');
+    if(mpw===opw) return say(m,'두 비밀번호는 서로 다르게 정해 주세요.','bad');
+    busy(f,true); say(m,'열쇠를 확인하는 중입니다…');
+    gh('GET','',null,tok).then(function(r){ if(!(r.permissions&&r.permissions.push)) throw userErr('이 열쇠에는 올리기 권한이 없습니다. Contents 를 "Read and write" 로 만든 열쇠인지 확인해 주세요.'); return makeKeyFile(tok,mpw,opw);})
+      .then(function(key){return commit([{path:'data/key.json',b64:textB64(key)}],'관리자 열쇠 설정',tok);})
+      .then(function(){f.reset(); say(m,'저장했습니다. 1~2분 뒤부터 방금 정한 비밀번호로 들어갈 수 있습니다.','ok');},
+        function(e){say(m,e&&e.user?e.message:(e&&e.status===401?'열쇠가 맞지 않습니다. 다시 복사해서 넣어 주세요.':why(e)),'bad');}).then(function(){busy(f,false);});
+  });
+})();
+</script>
+</body>
+</html>
