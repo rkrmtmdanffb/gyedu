@@ -1,0 +1,171 @@
+{
+ "v": 1,
+ "info": {
+  "greeting": "",
+  "address": "",
+  "phone": "",
+  "email": "",
+  "fee": "",
+  "officePhone": "",
+  "sponsorUse": "",
+  "sponsorAccount": "",
+  "joinFormUrl": "",
+  "sheetUrl": ""
+ },
+ "current": {
+  "gen": "제8대",
+  "year": "2025년",
+  "president": "정형기",
+  "since": "2024년 12월 27일 취임",
+  "photo": "img/president.jpg",
+  "advisers": "임원재 · 김재숙 · 김종현",
+  "officers": [
+   {
+    "role": "상임부회장",
+    "name": "문정은"
+   },
+   {
+    "role": "부회장",
+    "name": "김태우"
+   },
+   {
+    "role": "감사",
+    "name": "한재성 · 신은희"
+   },
+   {
+    "role": "사무국장",
+    "name": "송수정"
+   },
+   {
+    "role": "재무국장",
+    "name": "하태곤"
+   }
+  ]
+ },
+ "past": [
+  {
+   "gen": "초대",
+   "name": "서옥란",
+   "year": ""
+  },
+  {
+   "gen": "제2대",
+   "name": "",
+   "year": ""
+  },
+  {
+   "gen": "제3대",
+   "name": "",
+   "year": ""
+  },
+  {
+   "gen": "제4대",
+   "name": "조재인",
+   "year": ""
+  },
+  {
+   "gen": "제5대",
+   "name": "",
+   "year": ""
+  },
+  {
+   "gen": "제6대",
+   "name": "안영숙",
+   "year": "2023년"
+  },
+  {
+   "gen": "제7대",
+   "name": "전선미",
+   "year": "2024년"
+  },
+  {
+   "gen": "제8대",
+   "name": "정형기",
+   "year": "2025년"
+  }
+ ],
+ "news": [
+  {
+   "id": "ceremony",
+   "cat": "행사",
+   "title": "제7·8대 회장단 및 감사 이·취임식",
+   "date": "2024-12-27",
+   "body": "",
+   "img": "",
+   "legacy": "news-ceremony"
+  }
+ ],
+ "events": [
+  {
+   "date": "2024-12-27",
+   "title": "제7·8대 회장단 및 감사 이·취임식",
+   "info": "17:30 · 광양교육지원청 햇살동 시청각실",
+   "post": "ceremony"
+  }
+ ],
+ "files": [
+  {
+   "k": "행사자료",
+   "t": "제7·8대 회장단 및 감사 이·취임식 리플릿 (식순·임원 명단·주요 사업)",
+   "e": "PDF",
+   "d": "2024.12.27",
+   "link": "files/leaflet.pdf"
+  },
+  {
+   "k": "영상·음원",
+   "t": "2025 이·취임식 타이틀 영상 (50초)",
+   "e": "MP4",
+   "d": "2024.12.26",
+   "video": "files/title.mp4"
+  },
+  {
+   "k": "영상·음원",
+   "t": "행사 음원 (1분 53초)",
+   "e": "MP3",
+   "d": "",
+   "audio": "files/music.mp4"
+  },
+  {
+   "k": "사진",
+   "t": "이·취임식 초대장 (움직이는 이미지)",
+   "e": "GIF",
+   "d": "2024.12.27",
+   "link": "img/invite.gif"
+  },
+  {
+   "k": "서식",
+   "t": "입회원서(회원 가입 신청서) 양식",
+   "e": "HWP",
+   "d": ""
+  }
+ ],
+ "banners": {
+  "members": [
+   {
+    "img": "",
+    "name": "",
+    "link": ""
+   },
+   {
+    "img": "",
+    "name": "",
+    "link": ""
+   },
+   {
+    "img": "",
+    "name": "",
+    "link": ""
+   },
+   {
+    "img": "",
+    "name": "",
+    "link": ""
+   }
+  ],
+  "ad": {
+   "img": "",
+   "name": "",
+   "link": ""
+  }
+ }
+}
