@@ -400,6 +400,9 @@ footer .ph{color:#5A3B00}
 .chat-f input{flex:1;min-width:0;min-height:46px;border:1px solid #B9CDB0;border-radius:999px;padding:0 16px;font:inherit;font-size:16px;color:#1C2B20;background:#fff}
 .chat-f button{flex:none;min-height:46px;padding:0 18px;border-radius:999px;border:0;background:#0E7A35;color:#fff;font:inherit;font-weight:700;cursor:pointer}
 @media (max-width:760px){.chat-fab{bottom:84px;right:12px;height:50px;padding:0 16px}.chat{right:12px;bottom:142px;height:min(520px,calc(100vh - 200px))}}
+
+/* 만든 사람 표시: 맨 아래 가운데에 아주 작고 흐리게(오른쪽 구석은 문의 단추가 가린다) */
+.ft-made{margin:0;padding:0 16px 10px;text-align:center;font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.3)}
 </style>
 </head>
 <body>
@@ -711,7 +714,8 @@ footer .ph{color:#5A3B00}
     <div><dt>이메일</dt><dd id="c-email"></dd></div>
   </dl>
   <div class="ft-c"><button type="button" class="ft-btn fill" data-chat>💬 문의하기</button><a class="ft-btn" href="admin.html">글·사진 올리기</a></div>
-</div></footer>
+</div>
+<p class="ft-made">Made by H.T.G</p></footer>
 
 <!-- 문의 도우미: 자주 묻는 것을 눌러서 답을 본다. 사람이 답하는 것이 아니라, 홈페이지에 적힌 내용을 찾아 보여 준다. -->
 <button type="button" class="chat-fab" id="chat-fab" data-chat aria-label="문의 도우미 열기">💬<span>문의</span></button>
