@@ -571,8 +571,8 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
 
   /* 관련 기관: img에 로고 그림 파일을 넣으면 글자 대신 로고가 보인다. */
   var RELATED=[
-    {name:'광양시청',link:'https://gwangyang.go.kr/',img:''},
-    {name:'전남광주통합특별시교육청',link:'https://www.jge.go.kr/jgemain/main.do',img:''},
+    {name:'광양시청',link:'https://gwangyang.go.kr/',img:'img/rel-gy.png',showName:true},
+    {name:'전남광주통합특별시교육청',link:'https://www.jge.go.kr/jgemain/main.do',img:'img/rel-jne.png'},
     {name:'전남광주통합특별시광양교육지원청',link:'https://help.jne.kr/gyed/main.do',img:'img/rel-gyedu-office.png'},
     {name:'광양문화원',link:'http://www.xn--hc0bk2yb5hribo85b.kr/',img:'img/rel-munhwa.png'}
   ];
@@ -581,7 +581,7 @@ footer strong{display:block;color:#fff;font-size:18px;margin-bottom:4px}
     RELATED.forEach(function(r){
       var a=document.createElement(r.link?'a':'div'); if(r.link){a.href=r.link; a.target='_blank'; a.rel='noopener';}
       if(r.img){var im=document.createElement('img'); im.src=r.img; im.alt=r.name+' 홈페이지'; a.appendChild(im);}
-      else{var t=document.createElement('span'); t.textContent=r.name; a.appendChild(t);}
+      if(!r.img||r.showName){var t=document.createElement('span'); t.textContent=r.name; a.appendChild(t);}
       var s=document.createElement('small'); s.textContent=r.link?'홈페이지 바로가기 ↗':'주소 준비 중'; a.appendChild(s);
       box.appendChild(a);
     });
